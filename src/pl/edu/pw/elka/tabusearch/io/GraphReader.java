@@ -40,8 +40,8 @@ public class GraphReader
 
     private void checkNodesSize() throws InvalidDataFormatException
     {
-        int actualSize = edgeSet.size();
-        int expectedSize = getExpectedEdgesNumber(nodeMap);
+        final int actualSize = edgeSet.size();
+        final int expectedSize = getExpectedEdgesNumber(nodeMap);
         if( actualSize != expectedSize)
         {
             throw new InvalidDataFormatException(
@@ -73,7 +73,7 @@ public class GraphReader
     private void processLine(final String strLine)
         throws InvalidDataFormatException
     {
-        String[] tokens = strLine.split(" ");
+        final String[] tokens = strLine.split(" ");
         if(tokens.length != 3)
         {
             throw new InvalidDataFormatException(LINE_FORMAT_MESSAGE);
