@@ -2,7 +2,6 @@ package pl.edu.pw.elka.tabusearch.io;
 
 import pl.edu.pw.elka.tabusearch.domain.Solution;
 
-public interface SolutionPrinter
-{
+public interface SolutionPrinter {
     void print(Solution solution);
 }

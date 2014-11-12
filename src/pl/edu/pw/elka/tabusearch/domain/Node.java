@@ -2,35 +2,28 @@ package pl.edu.pw.elka.tabusearch.domain;
 
 import java.util.Objects;
 
-public class Node
-{
+public class Node {
     private String label;
 
-    public Node(final String label)
-    {
+    public Node(final String label) {
         this.label = label;
     }
 
-    public String getLabel()
-    {
+    public String getLabel() {
         return label;
     }
 
     @Override
-    public int hashCode()
-    {
+    public int hashCode() {
         return Objects.hash(label);
     }
 
     @Override
-    public boolean equals(final Object obj)
-    {
-        if (this == obj)
-        {
+    public boolean equals(final Object obj) {
+        if (this == obj) {
             return true;
         }
-        if (obj == null || getClass() != obj.getClass())
-        {
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
         final Node other = (Node) obj;

@@ -1,7 +1,6 @@
 package pl.edu.pw.elka.tabusearch.io;
 
-public class Config
-{
+public class Config {
     // parameters for Aspiration Plus Strategy
     private final Integer minParameter;
     private final Integer maxParameter;

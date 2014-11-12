@@ -12,70 +12,57 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class GraphReader
-{
+public class GraphReader {
     public static final String INPUT_FILE_NAME = "input_graph.txt";
     public static final String LINE_FORMAT_MESSAGE =
-        "Each line should have the following format: LABEL LABEL WEIGHT(integer)";
+            "Each line should have the following format: LABEL LABEL WEIGHT(integer)";
 
-    private Map<String,Node> nodeMap = new HashMap<>();
+    private Map<String, Node> nodeMap = new HashMap<>();
     private Set<Edge> edgeSet = new HashSet<>();
 
-    public Graph read() throws IOException, MultipleInvocationException, InvalidDataFormatException
-    {
+    public Graph read() throws IOException, MultipleInvocationException, InvalidDataFormatException {
         initReader();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(INPUT_FILE_NAME)))
-        {
+        try (BufferedReader br = new BufferedReader(new FileReader(INPUT_FILE_NAME))) {
             String strLine;
-            while ((strLine = br.readLine()) != null)
-            {
+            while ((strLine = br.readLine()) != null) {
                 processLine(strLine);
             }
         }
 
         checkNodesSize();
-        return new Graph(nodeMap,edgeSet);
+        return new Graph(nodeMap, edgeSet);
     }
 
-    private void checkNodesSize() throws InvalidDataFormatException
-    {
+    private void checkNodesSize() throws InvalidDataFormatException {
         final int actualSize = edgeSet.size();
         final int expectedSize = getExpectedEdgesNumber(nodeMap);
-        if( actualSize != expectedSize)
-        {
+        if (actualSize != expectedSize) {
             throw new InvalidDataFormatException(
-                "Wrong number of edges. Expected: " + expectedSize + ", actual: " + actualSize);
+                    "Wrong number of edges. Expected: " + expectedSize + ", actual: " + actualSize);
         }
     }
 
-    private int getExpectedEdgesNumber(final Map<String, Node> nodeMap)
-    {
+    private int getExpectedEdgesNumber(final Map<String, Node> nodeMap) {
         final int nodesNumber = nodeMap.size();
-        //the number below will always be an integer, because the product
+        // the number below will always be an integer, because the product
         // of two following integer numbers is always dividable by two
-        return (int) (nodesNumber * (nodesNumber-1) * 0.5);
+        return (int) (nodesNumber * (nodesNumber - 1) * 0.5);
     }
 
-    private void initReader() throws MultipleInvocationException
-    {
-        if(nodeMap != null || edgeSet != null)
-        {
+    private void initReader() throws MultipleInvocationException {
+        if (nodeMap != null || edgeSet != null) {
             throw new MultipleInvocationException();
-        }
-        else
-        {
+        } else {
             nodeMap = new HashMap<>();
             edgeSet = new HashSet<>();
         }
     }
 
     private void processLine(final String strLine)
-        throws InvalidDataFormatException
-    {
+            throws InvalidDataFormatException {
         final String[] tokens = strLine.split(" ");
-        if(tokens.length != 3)
-        {
+        if (tokens.length != 3) {
             throw new InvalidDataFormatException(LINE_FORMAT_MESSAGE);
         }
 
@@ -86,11 +73,9 @@ public class GraphReader
         edgeSet.add(new Edge(firstNode, secondNode, weight));
     }
 
-    private Node getOrCreateNode(final String startNodeLabel)
-    {
+    private Node getOrCreateNode(final String startNodeLabel) {
         Node startNode = nodeMap.get(startNodeLabel);
-        if(startNode == null)
-        {
+        if (startNode == null) {
             startNode = new Node(startNodeLabel);
             nodeMap.put(startNodeLabel, startNode);
         }

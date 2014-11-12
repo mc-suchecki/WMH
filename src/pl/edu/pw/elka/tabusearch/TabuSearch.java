@@ -6,10 +6,8 @@ import pl.edu.pw.elka.tabusearch.io.*;
 import pl.edu.pw.elka.tabusearch.optimization.Solver;
 import pl.edu.pw.elka.tabusearch.optimization.TabuSearchSolver;
 
-public class TabuSearch
-{
-    public static void main(final String[] args)
-    {
+public class TabuSearch {
+    public static void main(final String[] args) {
         final GraphReader graphReader = new GraphReader();
         final Graph graph = graphReader.read();
 
