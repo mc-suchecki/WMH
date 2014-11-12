@@ -1,5 +1,7 @@
 package pl.edu.pw.elka.tabusearch.domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -12,5 +14,15 @@ public class Graph
     {
         this.labelsToNodesMap = labelsToNodesMap;
         this.edges = edges;
+    }
+
+    public List<Node> getNodesList()
+    {
+        List<Node> nodesList = new ArrayList<Node>();
+        for (Node node : labelsToNodesMap.values())
+        {
+            nodesList.add(node);
+        }
+        return nodesList;
     }
 }
