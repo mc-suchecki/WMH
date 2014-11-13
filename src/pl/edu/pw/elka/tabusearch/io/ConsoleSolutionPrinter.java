@@ -7,10 +7,11 @@ public class ConsoleSolutionPrinter implements SolutionPrinter {
     @Override
     public void print(final Solution graph) {
         final StringBuilder sb = new StringBuilder();
+        sb.append("Solution found:");
         for (final Node node : graph.getNodeList()) {
-            sb.append(node.getLabel());
             sb.append(" ");
+            sb.append(node.getLabel());
         }
-        System.out.println(sb.toString());
+        System.out.println(sb);
     }
 }
