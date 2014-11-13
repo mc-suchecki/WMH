@@ -10,7 +10,7 @@ public class TwoOptNeighbourhoodGenerator implements NeighbourhoodGenerator {
     @Override
     public List<Solution> generateNeighbourhood(final Solution solution) {
         List<Node> nodeList = solution.getNodeList();
-        List<Solution> neighbourhood = new ArrayList<Solution>();
+        List<Solution> neighbourhood = new ArrayList<>();
 
         for (Integer i = 0; i < nodeList.size(); ++i) {
             for (Integer k = i + 1; k < nodeList.size(); ++k) {
@@ -23,7 +23,7 @@ public class TwoOptNeighbourhoodGenerator implements NeighbourhoodGenerator {
 
     // TODO test this!
     private List<Node> makeTwoOptSwap(final List<Node> nodesList, final Integer swapStart, final Integer swapEnd) {
-        List<Node> swappedList = new ArrayList<Node>();
+        List<Node> swappedList = new ArrayList<>();
 
         // add first part in order
         for (Integer i = 0; i < swapStart; ++i) {
@@ -31,7 +31,7 @@ public class TwoOptNeighbourhoodGenerator implements NeighbourhoodGenerator {
         }
 
         // add middle part in reverse order
-        for (Integer i = swapEnd; i == swapStart; --i) {
+        for (Integer i = swapEnd; i.equals(swapStart); --i) {
             swappedList.add(nodesList.get(i));
         }
 

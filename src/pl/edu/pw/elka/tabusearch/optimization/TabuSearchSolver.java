@@ -28,7 +28,7 @@ public class TabuSearchSolver implements Solver {
     public Solution findSolution(final Graph graph) {
         Solution currentSolution = solutionGenerator.generateInitialSolution(graph);
         Solution bestSolution = currentSolution;
-        List<Solution> tabuList = new ArrayList<Solution>();
+        List<Solution> tabuList = new ArrayList<>();
         List<Solution> neighbourhood;
         Integer aspiration = 0; // TODO initialize this
 

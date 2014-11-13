@@ -15,8 +15,8 @@ public class Graph {
     }
 
     public List<Node> getNodesList() {
-        List<Node> nodesList = new ArrayList<Node>();
-        for (Node node : labelsToNodesMap.values()) {
+        final List<Node> nodesList = new ArrayList<>();
+        for (final Node node : labelsToNodesMap.values()) {
             nodesList.add(node);
         }
         return nodesList;

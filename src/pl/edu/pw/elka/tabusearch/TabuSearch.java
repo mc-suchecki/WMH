@@ -20,7 +20,7 @@ public class TabuSearch {
 
             final SolutionPrinter solutionPrinter = new ConsoleSolutionPrinter();
             solutionPrinter.print(solution);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             e.printStackTrace();
         }
     }
