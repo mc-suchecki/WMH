@@ -8,16 +8,20 @@ import pl.edu.pw.elka.tabusearch.optimization.TabuSearchSolver;
 
 public class TabuSearch {
     public static void main(final String[] args) {
-        final GraphReader graphReader = new GraphReader();
-        final Graph graph = graphReader.read();
+        try {
+            final GraphReader graphReader = new GraphReader();
+            final Graph graph = graphReader.read();
 
-        final ConfigReader configReader = new ConfigReader();
-        final Config config = configReader.read();
+            final ConfigReader configReader = new ConfigReader();
+            final Config config = configReader.read();
 
-        final Solver solver = new TabuSearchSolver(config);
-        final Solution solution = solver.findSolution(graph);
+            final Solver solver = new TabuSearchSolver(config);
+            final Solution solution = solver.findSolution(graph);
 
-        final SolutionPrinter solutionPrinter = new ConsoleSolutionPrinter();
-        solutionPrinter.print(solution);
+            final SolutionPrinter solutionPrinter = new ConsoleSolutionPrinter();
+            solutionPrinter.print(solution);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
