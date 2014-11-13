@@ -8,6 +8,7 @@ import java.util.List;
 
 public class TwoOptNeighbourhoodGenerator implements NeighbourhoodGenerator {
     @Override
+    //TODO change result to iterable
     public List<Solution> generateNeighbourhood(final Solution solution) {
         List<Node> nodeList = solution.getNodeList();
         List<Solution> neighbourhood = new ArrayList<>();
