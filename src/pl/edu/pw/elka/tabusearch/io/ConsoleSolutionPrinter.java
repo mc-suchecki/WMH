@@ -11,5 +11,6 @@ public class ConsoleSolutionPrinter implements SolutionPrinter {
             sb.append(node.getLabel());
             sb.append(" ");
         }
+        System.out.println(sb.toString());
     }
 }
