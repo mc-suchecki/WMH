@@ -17,8 +17,8 @@ public class GraphReader {
     public static final String LINE_FORMAT_MESSAGE =
             "Each line should have the following format: LABEL LABEL WEIGHT(integer)";
 
-    private Map<String, Node> nodeMap = new HashMap<>();
-    private Set<Edge> edgeSet = new HashSet<>();
+    private Map<String, Node> nodeMap;
+    private Set<Edge> edgeSet;
 
     public Graph read() throws IOException, MultipleInvocationException, InvalidDataFormatException {
         initReader();
