@@ -6,10 +6,15 @@ public class Config {
     private final Integer maxParameter;
     private final Integer plusParameter;
 
-    public Config(final Integer minParameter, final Integer maxParameter, final Integer plusParameter) {
+    // parameters for Tabu List
+    private final Integer tabuListSize;
+
+    public Config(final Integer minParameter, final Integer maxParameter, final Integer plusParameter,
+                  final Integer tabuListSize) {
         this.minParameter = minParameter;
         this.maxParameter = maxParameter;
         this.plusParameter = plusParameter;
+        this.tabuListSize = tabuListSize;
     }
 
     public Integer getMinParameter() {
@@ -22,5 +27,9 @@ public class Config {
 
     public Integer getPlusParameter() {
         return plusParameter;
+    }
+
+    public Integer getTabuListSize() {
+        return tabuListSize;
     }
 }

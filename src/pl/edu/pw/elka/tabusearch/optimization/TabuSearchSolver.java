@@ -17,9 +17,11 @@ public class TabuSearchSolver implements Solver {
     private final BestSolutionFinder bestSolutionFinder;
 
     private final Config config;
+    private TabuList tabuList;
 
     public TabuSearchSolver(final Config config) {
         this.config = config;
+        this.tabuList = new TabuList(config.getTabuListSize());
         this.bestSolutionFinder = new AspirationPlusFinder(
                 config.getMinParameter(), config.getMaxParameter(), config.getPlusParameter());
     }
@@ -28,16 +30,14 @@ public class TabuSearchSolver implements Solver {
     public Solution findSolution(final Graph graph) {
         Solution currentSolution = solutionGenerator.generateInitialSolution(graph);
         Solution bestSolution = currentSolution;
-        List<Solution> tabuList = new ArrayList<>();
         List<Solution> neighbourhood;
-        Integer aspiration = 0; // TODO initialize this
+        Integer aspiration = 0; // TODO initialize this properly - Maciek
 
-        while (currentSolution.getDistance() > 5) //TODO define stop criterion
-        {
-            //TODO verify the algorithm
+        // TODO define stop criterion - iterations limit or couple iterations without improvement - Maciek
+        while (currentSolution.getDistance() > 5)  {
             neighbourhood = neighbourhoodGenerator.generateNeighbourhood(currentSolution);
             currentSolution = bestSolutionFinder.getBestSolution(neighbourhood, tabuList, aspiration);
-            tabuList.add(currentSolution);
+            tabuList.add(neighbourhoodGenerator.getLastMove());
             if (currentSolution.getDistance() > bestSolution.getDistance()) {
                 bestSolution = currentSolution;
             }

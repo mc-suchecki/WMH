@@ -20,16 +20,16 @@ public class AspirationPlusFinder implements BestSolutionFinder {
         this.plusParameter = plus;
     }
 
-    // TODO test this
+    // TODO test this - Maciek
     @Override
-    public Solution getBestSolution(final List<Solution> neighbourhood, final List<Solution> tabuList,
+    public Solution getBestSolution(final List<Solution> neighbourhood, final TabuList tabuList,
                                     final Integer aspiration) {
         Solution bestSolution = neighbourhood.get(0);
         Solution currentSolution = neighbourhood.get(1);
         Integer solutionsChecked = 1;
         Integer solutionsSinceAspirationSatisfied = 0;
 
-        // TODO what with tabuList?
+        // TODO use tabuList - Maciek
         do {
             if (currentSolution.getDistance() > bestSolution.getDistance()) {
                 bestSolution = currentSolution;

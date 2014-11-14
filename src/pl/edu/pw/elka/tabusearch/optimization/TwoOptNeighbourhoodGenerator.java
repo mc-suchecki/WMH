@@ -1,5 +1,6 @@
 package pl.edu.pw.elka.tabusearch.optimization;
 
+import pl.edu.pw.elka.tabusearch.domain.Move;
 import pl.edu.pw.elka.tabusearch.domain.Node;
 import pl.edu.pw.elka.tabusearch.domain.Solution;
 
@@ -8,7 +9,7 @@ import java.util.List;
 
 public class TwoOptNeighbourhoodGenerator implements NeighbourhoodGenerator {
     @Override
-    //TODO change result to iterable collection
+    //TODO change result to iterable collection - Jacek
     public List<Solution> generateNeighbourhood(final Solution solution) {
         final List<Node> nodeList = solution.getNodesList();
         List<Solution> neighbourhood = new ArrayList<>();
@@ -20,6 +21,12 @@ public class TwoOptNeighbourhoodGenerator implements NeighbourhoodGenerator {
         }
 
         return neighbourhood;
+    }
+
+    @Override
+    public Move getLastMove() {
+        // TODO implement - Maciek
+        return null;
     }
 
     private List<Node> makeTwoOptSwap(final List<Node> nodesList, final Integer swapStart, final Integer swapEnd) {
