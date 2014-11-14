@@ -5,6 +5,7 @@
 package pl.edu.pw.elka.tabusearch.optimization;
 
 import pl.edu.pw.elka.tabusearch.domain.Graph;
+import pl.edu.pw.elka.tabusearch.domain.Neighbourhood;
 import pl.edu.pw.elka.tabusearch.domain.Solution;
 import pl.edu.pw.elka.tabusearch.io.Config;
 
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TabuSearchSolver implements Solver {
+
     private final InitialSolutionGenerator solutionGenerator = new InitialSolutionGenerator();
     private final NeighbourhoodGenerator neighbourhoodGenerator = new TwoOptNeighbourhoodGenerator();
     private final BestSolutionFinder bestSolutionFinder;
@@ -30,19 +32,27 @@ public class TabuSearchSolver implements Solver {
     public Solution findSolution(final Graph graph) {
         Solution currentSolution = solutionGenerator.generateInitialSolution(graph);
         Solution bestSolution = currentSolution;
-        List<Solution> neighbourhood;
-        Integer aspiration = 0; // TODO initialize this properly - Maciek
+        Neighbourhood neighbourhood;
+        Integer iterationsWithoutImprovement = 0;
+        Integer aspiration = generateAspirationLevel(graph);
 
-        // TODO define stop criterion - iterations limit or couple iterations without improvement - Maciek
-        while (currentSolution.getDistance() > 5)  {
+        while (iterationsWithoutImprovement < 5)  {
             neighbourhood = neighbourhoodGenerator.generateNeighbourhood(currentSolution);
             currentSolution = bestSolutionFinder.getBestSolution(neighbourhood, tabuList, aspiration);
-            tabuList.add(neighbourhoodGenerator.getLastMove());
             if (currentSolution.getDistance() > bestSolution.getDistance()) {
+                tabuList.add(bestSolutionFinder.getLastMove());
+                iterationsWithoutImprovement = 0;
                 bestSolution = currentSolution;
+            } else {
+                iterationsWithoutImprovement++;
             }
         }
 
         return bestSolution;
+    }
+
+    private Integer generateAspirationLevel(final Graph graph) {
+        // TODO implement as average distance * nodesCount - Maciek
+        return 0;
     }
 }

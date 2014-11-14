@@ -1,11 +1,12 @@
 package pl.edu.pw.elka.tabusearch.optimization;
 
+import pl.edu.pw.elka.tabusearch.domain.Move;
+import pl.edu.pw.elka.tabusearch.domain.Neighbourhood;
 import pl.edu.pw.elka.tabusearch.domain.Solution;
 
-import java.util.List;
-
 /**
- * Created by mc on 11/11/14.
+ * Class implementing Aspiration Plus strategy to find best solution in the neighbourhood.
+ * @author mc
  */
 public class AspirationPlusFinder implements BestSolutionFinder {
 
@@ -13,6 +14,9 @@ public class AspirationPlusFinder implements BestSolutionFinder {
     private final Integer minParameter;
     private final Integer maxParameter;
     private final Integer plusParameter;
+
+    // move that resulted in generating the best solution
+    private Move bestMove;
 
     public AspirationPlusFinder(final Integer min, final Integer max, final Integer plus) {
         this.minParameter = min;
@@ -22,24 +26,28 @@ public class AspirationPlusFinder implements BestSolutionFinder {
 
     // TODO test this - Maciek
     @Override
-    public Solution getBestSolution(final List<Solution> neighbourhood, final TabuList tabuList,
+    public Solution getBestSolution(final Neighbourhood neighbourhood, final TabuList tabuList,
                                     final Integer aspiration) {
-        Solution bestSolution = neighbourhood.get(0);
-        Solution currentSolution = neighbourhood.get(1);
+        Solution bestSolution = neighbourhood.getNextSolution();
+        this.bestMove = neighbourhood.getLastMove();
+        Solution currentSolution = neighbourhood.getNextSolution();
         Integer solutionsChecked = 1;
         Integer solutionsSinceAspirationSatisfied = 0;
 
-        // TODO use tabuList - Maciek
         do {
             if (currentSolution.getDistance() > bestSolution.getDistance()) {
-                bestSolution = currentSolution;
+                // TODO use tabuList - Maciek
+                if (!tabuList.contains(neighbourhood.getLastMove())) {
+                    bestSolution = currentSolution;
+                    this.bestMove = neighbourhood.getLastMove();
+                }
             }
             if (currentSolution.getDistance() > aspiration) {
                 ++solutionsSinceAspirationSatisfied;
             }
-            currentSolution = neighbourhood.get(solutionsChecked);
+            currentSolution = neighbourhood.getNextSolution();
             ++solutionsChecked;
-        } while (!enoughSolutionsChecked(neighbourhood.size(), solutionsChecked, solutionsSinceAspirationSatisfied));
+        } while (!enoughSolutionsChecked(neighbourhood.getSize(), solutionsChecked, solutionsSinceAspirationSatisfied));
 
         return bestSolution;
     }
@@ -57,4 +65,10 @@ public class AspirationPlusFinder implements BestSolutionFinder {
         }
         return true;
     }
+
+    @Override
+    public Move getLastMove() {
+        return this.bestMove;
+    }
+
 }
