@@ -5,13 +5,11 @@ import pl.edu.pw.elka.tabusearch.domain.Solution;
 
 public class ConsoleSolutionPrinter implements SolutionPrinter {
     @Override
-    public void print(final Solution graph) {
+    public void print(final Solution solution) {
         final StringBuilder sb = new StringBuilder();
-        sb.append("Solution found:");
-        for (final Node node : graph.getNodeList()) {
-            sb.append(" ");
-            sb.append(node.getLabel());
-        }
+        sb.append("Solution found: ");
+        sb.append(solution.toString());
+        sb.append("=> distance = " + solution.getDistance());
         System.out.println(sb);
     }
 }

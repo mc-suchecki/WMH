@@ -39,14 +39,16 @@ public class AspirationPlusFinder implements BestSolutionFinder {
             }
             currentSolution = neighbourhood.get(solutionsChecked);
             ++solutionsChecked;
-        } while (!enoughSolutionsChecked(solutionsChecked, solutionsSinceAspirationSatisfied));
+        } while (!enoughSolutionsChecked(neighbourhood.size(), solutionsChecked, solutionsSinceAspirationSatisfied));
 
         return bestSolution;
     }
 
-    private Boolean enoughSolutionsChecked(final Integer solutionsChecked,
+    private Boolean enoughSolutionsChecked(final Integer neighbourhoodSize, final Integer solutionsChecked,
                                            final Integer solutionsSinceAspirationSatisfied) {
-        if (solutionsChecked < minParameter) {
+        if (neighbourhoodSize <= solutionsChecked) {
+            return true;
+        } else if (solutionsChecked < minParameter) {
             return false;
         } else if (solutionsChecked > maxParameter) {
             return true;

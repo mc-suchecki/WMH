@@ -32,7 +32,7 @@ public class TabuSearchSolver implements Solver {
         List<Solution> neighbourhood;
         Integer aspiration = 0; // TODO initialize this
 
-        while (currentSolution.getDistance() > 1000) //TODO define stop criterion
+        while (currentSolution.getDistance() > 5) //TODO define stop criterion
         {
             //TODO verify the algorithm
             neighbourhood = neighbourhoodGenerator.generateNeighbourhood(currentSolution);

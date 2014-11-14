@@ -1,6 +1,5 @@
 package pl.edu.pw.elka.tabusearch.io;
 
-import pl.edu.pw.elka.tabusearch.domain.Edge;
 import pl.edu.pw.elka.tabusearch.domain.Graph;
 import pl.edu.pw.elka.tabusearch.domain.Node;
 
@@ -18,7 +17,7 @@ public class GraphReader {
             "Each line should have the following format: LABEL LABEL WEIGHT(integer)";
 
     private Map<String, Node> nodeMap;
-    private Set<Edge> edgeSet;
+    private Integer edgesCount;
 
     public Graph read() throws IOException, MultipleInvocationException, InvalidDataFormatException {
         initReader();
@@ -31,31 +30,30 @@ public class GraphReader {
         }
 
         checkNodesSize();
-        return new Graph(nodeMap, edgeSet);
+        return new Graph(new HashSet<Node>(nodeMap.values()));
     }
 
     private void checkNodesSize() throws InvalidDataFormatException {
-        final int actualSize = edgeSet.size();
-        final int expectedSize = getExpectedEdgesNumber(nodeMap);
-        if (actualSize != expectedSize) {
+        final int expectedEdgesCount = getExpectedEdgesCount(nodeMap);
+        if (edgesCount != expectedEdgesCount ) {
             throw new InvalidDataFormatException(
-                    "Wrong number of edges. Expected: " + expectedSize + ", actual: " + actualSize);
+                    "Wrong number of edges. Expected: " + expectedEdgesCount + ", actual: " + edgesCount);
         }
     }
 
-    private int getExpectedEdgesNumber(final Map<String, Node> nodeMap) {
-        final int nodesNumber = nodeMap.size();
+    private int getExpectedEdgesCount(final Map<String, Node> nodeMap) {
+        final int nodesCount = nodeMap.size();
         // the number below will always be an integer, because the product
         // of two following integer numbers is always dividable by two
-        return (int) (nodesNumber * (nodesNumber - 1) * 0.5);
+        return (int) (nodesCount * (nodesCount - 1) * 0.5);
     }
 
     private void initReader() throws MultipleInvocationException {
-        if (nodeMap != null || edgeSet != null) {
+        if (nodeMap != null || edgesCount != null) {
             throw new MultipleInvocationException();
         } else {
             nodeMap = new HashMap<>();
-            edgeSet = new HashSet<>();
+            edgesCount = 0;
         }
     }
 
@@ -66,20 +64,21 @@ public class GraphReader {
             throw new InvalidDataFormatException(LINE_FORMAT_MESSAGE);
         }
 
-        final Node firstNode = getOrCreateNode(tokens[0]);
-        final Node secondNode = getOrCreateNode(tokens[1]);
+        Node firstNode = getOrCreateNode(tokens[0]);
+        Node secondNode = getOrCreateNode(tokens[1]);
         final Integer weight = Integer.parseInt(tokens[2]);
 
-        edgeSet.add(new Edge(firstNode, secondNode, weight));
+        firstNode.addConnection(secondNode.getLabel(), weight);
+        secondNode.addConnection(firstNode.getLabel(), weight);
+        ++edgesCount;
     }
 
-    private Node getOrCreateNode(final String startNodeLabel) {
-        Node startNode = nodeMap.get(startNodeLabel);
-        if (startNode == null) {
-            startNode = new Node(startNodeLabel);
-            nodeMap.put(startNodeLabel, startNode);
+    private Node getOrCreateNode(final String nodeLabel) {
+        Node node = nodeMap.get(nodeLabel);
+        if (null == node) {
+            node = new Node(nodeLabel);
+            nodeMap.put(nodeLabel, node);
         }
-
-        return startNode;
+        return node;
     }
 }
