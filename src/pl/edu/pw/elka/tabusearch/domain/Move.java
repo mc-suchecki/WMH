@@ -1,5 +1,7 @@
 package pl.edu.pw.elka.tabusearch.domain;
 
+import java.util.Objects;
+
 /**
  * Class representing move that converted one Solution to another.
  * @author mc
@@ -14,5 +16,28 @@ public class Move {
         this.swapEnd = swapEnd;
     }
 
-    // TODO implement - Jacek
+    public Integer getSwapStart() {
+        return swapStart;
+    }
+
+    public Integer getSwapEnd() {
+        return swapEnd;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(swapStart, swapEnd);
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        final Move other = (Move) obj;
+        return Objects.equals(this.swapStart, other.swapStart) && Objects.equals(this.swapEnd, other.swapEnd);
+    }
 }
