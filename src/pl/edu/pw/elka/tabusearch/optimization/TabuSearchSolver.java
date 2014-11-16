@@ -1,20 +1,19 @@
 package pl.edu.pw.elka.tabusearch.optimization;
 
 import pl.edu.pw.elka.tabusearch.domain.Graph;
-import pl.edu.pw.elka.tabusearch.domain.Neighbourhood;
 import pl.edu.pw.elka.tabusearch.domain.Node;
 import pl.edu.pw.elka.tabusearch.domain.Solution;
 import pl.edu.pw.elka.tabusearch.io.Config;
+import pl.edu.pw.elka.tabusearch.optimization.neighbourhood.TwoOptNeighbourhood;
 
 import java.util.List;
 
 public class TabuSearchSolver implements Solver {
 
     private final InitialSolutionGenerator solutionGenerator = new InitialSolutionGenerator();
-    private final NeighbourhoodGenerator neighbourhoodGenerator = new TwoOptNeighbourhoodGenerator();
     private final BestSolutionFinder bestSolutionFinder;
 
-    private final Config config;
+    private final Config config; //TODO Maciek: use parameters from config
     private TabuList tabuList;
 
     public TabuSearchSolver(final Config config) {
@@ -28,12 +27,12 @@ public class TabuSearchSolver implements Solver {
     public Solution findSolution(final Graph graph) {
         Solution currentSolution = solutionGenerator.generateInitialSolution(graph);
         Solution bestSolution = currentSolution;
-        Neighbourhood neighbourhood;
+        TwoOptNeighbourhood neighbourhood;
         Integer iterationsWithoutImprovement = 0;
-        Integer aspiration = generateAspirationLevel(graph);
+        final Integer aspiration = generateAspirationLevel(graph);
 
         while (iterationsWithoutImprovement < 5)  {
-            neighbourhood = neighbourhoodGenerator.generateNeighbourhood(currentSolution);
+            neighbourhood = new TwoOptNeighbourhood(currentSolution);
             currentSolution = bestSolutionFinder.getBestSolution(neighbourhood, tabuList, aspiration);
             if (currentSolution.getDistance() > bestSolution.getDistance()) {
                 tabuList.add(bestSolutionFinder.getLastMove());
@@ -53,9 +52,9 @@ public class TabuSearchSolver implements Solver {
      * @return aspiration level
      */
     private Integer generateAspirationLevel(final Graph graph) {
-        List<Node> nodesList = graph.getNodesList();
+        final List<Node> nodesList = graph.getNodesList();
         Integer aspirationLevel = 0;
-        for (Node node : nodesList) {
+        for (final Node node : nodesList) {
             aspirationLevel += node.getAverageDistance();
         }
         return aspirationLevel;

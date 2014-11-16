@@ -1,8 +1,9 @@
 package pl.edu.pw.elka.tabusearch.optimization;
 
 import pl.edu.pw.elka.tabusearch.domain.Move;
-import pl.edu.pw.elka.tabusearch.domain.Neighbourhood;
 import pl.edu.pw.elka.tabusearch.domain.Solution;
+import pl.edu.pw.elka.tabusearch.optimization.neighbourhood.NeighboursIterator;
+import pl.edu.pw.elka.tabusearch.optimization.neighbourhood.TwoOptNeighbourhood;
 
 /**
  * Class implementing Aspiration Plus strategy to find best solution in the neighbourhood.
@@ -25,27 +26,31 @@ public class AspirationPlusFinder implements BestSolutionFinder {
     }
 
     @Override
-    public Solution getBestSolution(final Neighbourhood neighbourhood, final TabuList tabuList,
+    public Solution getBestSolution(final TwoOptNeighbourhood neighbourhood, final TabuList tabuList,
                                     final Integer aspiration) {
-        Solution bestSolution = neighbourhood.getNextSolution();
-        this.bestMove = neighbourhood.getLastMove();
-        Solution currentSolution = neighbourhood.getNextSolution();
+        //TODO co jeśli będzie tylko jedno sąsiednie rozwiązanie (przypadek dla dwóch miast)
+        //TODO przerobić kod tej metody tak, by nie używał iterator.current()
+        final NeighboursIterator iterator = neighbourhood.iterator();
+
+        Solution bestSolution = iterator.next().getSolution();
+        this.bestMove = iterator.current().getMove();
+        Solution currentSolution = iterator.next().getSolution();
         Integer solutionsChecked = 1;
         Integer solutionsSinceAspirationSatisfied = 0;
 
         do {
             if (currentSolution.getDistance() > bestSolution.getDistance()) {
-                if (!tabuList.contains(neighbourhood.getLastMove()) || (currentSolution.getDistance() >= aspiration)) {
+                if (!tabuList.contains(iterator.current().getMove()) || (currentSolution.getDistance() >= aspiration)) {
                     bestSolution = currentSolution;
-                    this.bestMove = neighbourhood.getLastMove();
+                    this.bestMove = iterator.current().getMove();
                 }
             }
             if (bestSolution.getDistance() > aspiration) {
                 ++solutionsSinceAspirationSatisfied;
             }
-            currentSolution = neighbourhood.getNextSolution();
+            currentSolution = iterator.next().getSolution();
             ++solutionsChecked;
-        } while (!enoughSolutionsChecked(neighbourhood.getSize(), solutionsChecked, solutionsSinceAspirationSatisfied));
+        } while (!enoughSolutionsChecked(neighbourhood.size(), solutionsChecked, solutionsSinceAspirationSatisfied));
 
         return bestSolution;
     }
