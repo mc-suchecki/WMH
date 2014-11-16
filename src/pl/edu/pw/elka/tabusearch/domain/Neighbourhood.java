@@ -11,12 +11,11 @@ import java.util.List;
  */
 //TODO make this lazy loading? - Jacek
 public class Neighbourhood {
-
     private Integer size;
     private Integer index;
     private Move lastMove;
 
-    private List<Pair<Solution, Move>> solutionsAndMovesList = new ArrayList<>();
+    private final List<Pair<Solution, Move>> solutionsAndMovesList = new ArrayList<>();
 
     public Neighbourhood() {
         this.index = -1;
