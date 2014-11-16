@@ -9,7 +9,6 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class GraphReader {
     private static final String INPUT_FILE_NAME = "test/input_graph.txt";
@@ -30,7 +29,7 @@ public class GraphReader {
         }
 
         checkNodesSize();
-        return new Graph(new HashSet<Node>(nodeMap.values()));
+        return new Graph(new HashSet<>(nodeMap.values()));
     }
 
     private void checkNodesSize() throws InvalidDataFormatException {
@@ -64,8 +63,8 @@ public class GraphReader {
             throw new InvalidDataFormatException(LINE_FORMAT_MESSAGE);
         }
 
-        Node firstNode = getOrCreateNode(tokens[0]);
-        Node secondNode = getOrCreateNode(tokens[1]);
+        final Node firstNode = getOrCreateNode(tokens[0]);
+        final Node secondNode = getOrCreateNode(tokens[1]);
         final Integer weight = Integer.parseInt(tokens[2]);
 
         firstNode.addConnection(secondNode.getLabel(), weight);
