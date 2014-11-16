@@ -2,18 +2,44 @@ package pl.edu.pw.elka.tabusearch.optimization;
 
 import pl.edu.pw.elka.tabusearch.domain.Move;
 
-public class TabuList {
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Set;
 
-    public TabuList(final Integer tabuListSize) {
-        // TODO implement - Jacek
+/**
+ * Container for storing moves done during tabu search.
+ */
+public class TabuList {
+    private final Integer tabuListMaxSize;
+    private Integer size;
+
+    private final Set<Move> movesSet;
+    private final LinkedList<Move> movesList;
+
+    public TabuList(final Integer tabuListMaxSize) {
+        this.tabuListMaxSize = tabuListMaxSize;
+        this.movesSet = new HashSet<>(tabuListMaxSize);
+        this.movesList = new LinkedList<>();
+        this.size = 0;
     }
 
     public void add(final Move lastMove) {
-        // TODO implement - Jacek
+        movesSet.add(lastMove);
+        movesList.addFirst(lastMove);
+
+        if(size.equals(tabuListMaxSize))
+        {
+            final Move moveToDelete = movesList.getLast();
+            movesList.removeLast();
+            movesSet.remove(moveToDelete);
+        }
+        else
+        {
+            ++size;
+        }
     }
 
     public Boolean contains(final Move move) {
-        // TODO implement - Jacek
-        return false;
+        return movesSet.contains(move);
     }
 }
