@@ -1,6 +1,6 @@
 package pl.edu.pw.elka.tabusearch.domain;
 
-import javafx.util.Pair;
+import pl.edu.pw.elka.tabusearch.utils.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
