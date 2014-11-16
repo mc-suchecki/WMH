@@ -1,10 +1,13 @@
 package pl.edu.pw.elka.tabusearch.domain;
 
+/**
+ * Class representing move that converted one Solution to another.
+ * @author mc
+ */
 public class Move {
 
-    // parameters that define the move - conversion from one solution to another
-    private final Integer swapStart;
-    private final Integer swapEnd;
+    /** Parameters that define the move - conversion from one solution to another. */
+    private final Integer swapStart, swapEnd;
 
     public Move(final Integer swapStart, final Integer swapEnd) {
         this.swapStart = swapStart;

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Class representing Solution's neighbourhood - set of Solutions that are similar to each other.
  * @author mc
  */
 //TODO make this lazy loading? - Jacek

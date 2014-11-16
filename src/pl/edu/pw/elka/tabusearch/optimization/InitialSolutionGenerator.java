@@ -4,7 +4,8 @@ import pl.edu.pw.elka.tabusearch.domain.Graph;
 import pl.edu.pw.elka.tabusearch.domain.Solution;
 
 /**
- * Created by mc on 11/11/14.
+ * Class representing generator of initial solution - in this case generates Solution containing a random set of nodes.
+ * @author mc
  */
 public class InitialSolutionGenerator {
 

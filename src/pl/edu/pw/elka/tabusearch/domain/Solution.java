@@ -3,6 +3,10 @@ package pl.edu.pw.elka.tabusearch.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class representing particular solution - in this case a list of Nodes that are visited on the way.
+ * @author mc
+ */
 public class Solution {
     private final List<Node> nodes;
 

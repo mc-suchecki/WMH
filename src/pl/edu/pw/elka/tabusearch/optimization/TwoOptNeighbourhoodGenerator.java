@@ -8,6 +8,10 @@ import pl.edu.pw.elka.tabusearch.domain.Solution;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class generating Solution's neighbourhood using 2opt algorithm.
+ * @author mc
+ */
 public class TwoOptNeighbourhoodGenerator implements NeighbourhoodGenerator {
 
     @Override
