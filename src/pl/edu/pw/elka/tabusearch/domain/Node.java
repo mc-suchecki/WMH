@@ -19,6 +19,15 @@ public class Node {
         return distancesMap.get(nodeLabel);
     }
 
+    public Integer getAverageDistance() {
+        Double distanceSum = 0.0;
+        for (Integer distance : distancesMap.values()) {
+            distanceSum += distance;
+        }
+        Double result = distanceSum / distancesMap.size();
+        return result.intValue();   // round down (floor)
+    }
+
     public void addConnection(final String sourceLabel, final Integer distance) {
         this.distancesMap.put(sourceLabel, distance);
     }

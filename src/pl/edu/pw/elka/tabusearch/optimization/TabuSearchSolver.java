@@ -1,15 +1,11 @@
-/**
- * @author <a href="mailto:jacek.witkowski@gmail.com">Jacek Witkowski</a>
- * Created on 2014-11-2014.
- */
 package pl.edu.pw.elka.tabusearch.optimization;
 
 import pl.edu.pw.elka.tabusearch.domain.Graph;
 import pl.edu.pw.elka.tabusearch.domain.Neighbourhood;
+import pl.edu.pw.elka.tabusearch.domain.Node;
 import pl.edu.pw.elka.tabusearch.domain.Solution;
 import pl.edu.pw.elka.tabusearch.io.Config;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TabuSearchSolver implements Solver {
@@ -51,8 +47,17 @@ public class TabuSearchSolver implements Solver {
         return bestSolution;
     }
 
+    /**
+     * Returns aspiration level - here defined as sum of every node's average distance to another.
+     * @param graph graph to analyze
+     * @return aspiration level
+     */
     private Integer generateAspirationLevel(final Graph graph) {
-        // TODO implement as average distance * nodesCount - Maciek
-        return 0;
+        List<Node> nodesList = graph.getNodesList();
+        Integer aspirationLevel = 0;
+        for (Node node : nodesList) {
+            aspirationLevel += node.getAverageDistance();
+        }
+        return aspirationLevel;
     }
 }
