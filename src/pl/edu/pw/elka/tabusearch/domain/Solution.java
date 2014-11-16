@@ -9,6 +9,7 @@ import java.util.List;
  */
 public class Solution {
     private final List<Node> nodes;
+    private Integer distance;
 
     public Solution(final List<Node> nodes) {
         this.nodes = new ArrayList(nodes);
@@ -19,17 +20,20 @@ public class Solution {
     }
 
     public Integer getDistance() {
-        Integer distance = 0;
-        Node first, second;
-        for (Integer i = 0; i < nodes.size();) {
-            first = nodes.get(i);
-            ++i;
-            if (nodes.size() > i) {
-                second = nodes.get(i);
-            } else {
-                second = nodes.get(0);
+        if(distance == null)
+        {
+            distance = 0;
+            Node first, second;
+            for (Integer i = 0; i < nodes.size();) {
+                first = nodes.get(i);
+                ++i;
+                if (nodes.size() > i) {
+                    second = nodes.get(i);
+                } else {
+                    second = nodes.get(0);
+                }
+                distance += first.getDistanceToNode(second.getLabel());
             }
-            distance += first.getDistanceToNode(second.getLabel());
         }
         return distance;
     }
