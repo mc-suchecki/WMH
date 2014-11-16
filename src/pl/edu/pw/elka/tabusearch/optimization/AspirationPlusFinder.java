@@ -24,7 +24,6 @@ public class AspirationPlusFinder implements BestSolutionFinder {
         this.plusParameter = plus;
     }
 
-    // TODO test this - Maciek
     @Override
     public Solution getBestSolution(final Neighbourhood neighbourhood, final TabuList tabuList,
                                     final Integer aspiration) {
@@ -36,13 +35,12 @@ public class AspirationPlusFinder implements BestSolutionFinder {
 
         do {
             if (currentSolution.getDistance() > bestSolution.getDistance()) {
-                // TODO use tabuList - Maciek
-                if (!tabuList.contains(neighbourhood.getLastMove())) {
+                if (!tabuList.contains(neighbourhood.getLastMove()) || (currentSolution.getDistance() >= aspiration)) {
                     bestSolution = currentSolution;
                     this.bestMove = neighbourhood.getLastMove();
                 }
             }
-            if (currentSolution.getDistance() > aspiration) {
+            if (bestSolution.getDistance() > aspiration) {
                 ++solutionsSinceAspirationSatisfied;
             }
             currentSolution = neighbourhood.getNextSolution();
