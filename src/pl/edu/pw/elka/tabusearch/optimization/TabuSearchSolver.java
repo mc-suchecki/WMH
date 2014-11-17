@@ -13,11 +13,9 @@ public class TabuSearchSolver implements Solver {
     private final InitialSolutionGenerator solutionGenerator = new InitialSolutionGenerator();
     private final BestSolutionFinder bestSolutionFinder;
 
-    private final Config config; //TODO Maciek: use parameters from config
     private TabuList tabuList;
 
     public TabuSearchSolver(final Config config) {
-        this.config = config;
         this.tabuList = new TabuList(config.getTabuListSize());
         this.bestSolutionFinder = new AspirationPlusFinder(
                 config.getMinParameter(), config.getMaxParameter(), config.getPlusParameter());
