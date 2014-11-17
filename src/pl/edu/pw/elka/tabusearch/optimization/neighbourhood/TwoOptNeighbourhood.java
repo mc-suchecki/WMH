@@ -8,7 +8,7 @@ import java.util.List;
 
 public class TwoOptNeighbourhood implements Neighbourhood {
     private final List<Node> nodesList;
-    private int neighboursCount;
+    private final int neighboursCount;
 
     public TwoOptNeighbourhood(final Solution solution) {
         this.nodesList = Collections.unmodifiableList(solution.getNodesList());
@@ -16,7 +16,7 @@ public class TwoOptNeighbourhood implements Neighbourhood {
     }
 
     private static int calculateNeighboursCount(final int n) {
-        return (int)(0.5 * (((n * n) + n) - 2)); // n - size of nodes' list
+        return (int)(0.5 * n * (n-1)); // n - size of nodes' list
     }
 
     @Override
