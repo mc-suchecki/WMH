@@ -39,7 +39,6 @@ public class NeighboursIterator implements Iterator<SolutionMove> {
         return currSolutionMove;
     }
 
-    //TODO Maciek: to delete
     public SolutionMove current() {
         return currSolutionMove;
     }

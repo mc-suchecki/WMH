@@ -39,13 +39,13 @@ public class AspirationPlusFinder implements BestSolutionFinder {
         Integer solutionsSinceAspirationSatisfied = 0;
 
         do {
-            if (currentSolution.getDistance() > bestSolution.getDistance()) {
-                if (!tabuList.contains(iterator.current().getMove()) || (currentSolution.getDistance() >= aspiration)) {
+            if (currentSolution.getDistance() < bestSolution.getDistance()) {
+                if (!tabuList.contains(iterator.current().getMove()) || (currentSolution.getDistance() <= aspiration)) {
                     bestSolution = currentSolution;
                     this.bestMove = iterator.current().getMove();
                 }
             }
-            if (bestSolution.getDistance() > aspiration) {
+            if (bestSolution.getDistance() <= aspiration) {
                 ++solutionsSinceAspirationSatisfied;
             }
             currentSolution = iterator.next().getSolution();
@@ -63,7 +63,7 @@ public class AspirationPlusFinder implements BestSolutionFinder {
             return false;
         } else if (solutionsChecked > maxParameter) {
             return true;
-        } else if (solutionsChecked < solutionsSinceAspirationSatisfied + plusParameter) {
+        } else if (solutionsSinceAspirationSatisfied < plusParameter) {
             return false;
         }
         return true;

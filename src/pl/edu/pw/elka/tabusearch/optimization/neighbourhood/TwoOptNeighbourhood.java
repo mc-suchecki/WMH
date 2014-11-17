@@ -6,7 +6,7 @@ import pl.edu.pw.elka.tabusearch.domain.Solution;
 import java.util.Collections;
 import java.util.List;
 
-public class TwoOptNeighbourhood implements Neighbourhood {
+public class TwoOptNeighbourhood implements Iterable<SolutionMove>{
     private final List<Node> nodesList;
     private final int neighboursCount;
 
@@ -19,7 +19,6 @@ public class TwoOptNeighbourhood implements Neighbourhood {
         return (int)(0.5 * n * (n-1)); // n - size of nodes' list
     }
 
-    @Override
     public int size() {
         return neighboursCount;
     }
@@ -28,6 +27,4 @@ public class TwoOptNeighbourhood implements Neighbourhood {
     public NeighboursIterator iterator() {
         return new NeighboursIterator(nodesList);
     }
-
-
 }
