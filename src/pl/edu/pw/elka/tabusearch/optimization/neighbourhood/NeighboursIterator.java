@@ -43,6 +43,11 @@ public class NeighboursIterator implements Iterator<SolutionMove> {
         return currSolutionMove;
     }
 
+    @Override
+    public void remove() {
+        throw new UnsupportedOperationException();
+    }
+
     private List<Node> makeTwoOptSwap(final List<Node> nodesList, final Integer swapStart, final Integer swapEnd) {
         final List<Node> swappedList = new ArrayList<>();
 
