@@ -1,6 +1,8 @@
 package pl.edu.pw.elka.tabusearch.domain;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public class Graph {
     private final Set<Node> nodes;

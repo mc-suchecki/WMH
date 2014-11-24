@@ -3,7 +3,7 @@ package pl.edu.pw.elka.tabusearch.optimization;
 import pl.edu.pw.elka.tabusearch.domain.Graph;
 import pl.edu.pw.elka.tabusearch.domain.Node;
 import pl.edu.pw.elka.tabusearch.domain.Solution;
-import pl.edu.pw.elka.tabusearch.io.Config;
+import pl.edu.pw.elka.tabusearch.io.config.Config;
 import pl.edu.pw.elka.tabusearch.optimization.neighbourhood.TwoOptNeighbourhood;
 
 import java.util.List;

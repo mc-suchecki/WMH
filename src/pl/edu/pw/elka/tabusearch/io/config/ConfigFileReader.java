@@ -1,11 +1,14 @@
-package pl.edu.pw.elka.tabusearch.io;
+package pl.edu.pw.elka.tabusearch.io.config;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Properties;
 
-public class ConfigReader {
+public class ConfigFileReader implements ConfigReader {
     private static final String CONFIG_FILE_NAME = "test/config.properties";
 
+    @Override
     public Config read() throws IOException, NumberFormatException {
         final Properties properties = loadProperties();
         final Integer minParameter = Integer.parseInt(properties.getProperty("minParameter"));

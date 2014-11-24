@@ -2,7 +2,13 @@ package pl.edu.pw.elka.tabusearch;
 
 import pl.edu.pw.elka.tabusearch.domain.Graph;
 import pl.edu.pw.elka.tabusearch.domain.Solution;
-import pl.edu.pw.elka.tabusearch.io.*;
+import pl.edu.pw.elka.tabusearch.io.ConsoleSolutionPrinter;
+import pl.edu.pw.elka.tabusearch.io.GraphReader;
+import pl.edu.pw.elka.tabusearch.io.SolutionPrinter;
+import pl.edu.pw.elka.tabusearch.io.config.Config;
+import pl.edu.pw.elka.tabusearch.io.config.ConfigArgumentsReader;
+import pl.edu.pw.elka.tabusearch.io.config.ConfigFileReader;
+import pl.edu.pw.elka.tabusearch.io.config.ConfigReader;
 import pl.edu.pw.elka.tabusearch.optimization.Solver;
 import pl.edu.pw.elka.tabusearch.optimization.TabuSearchSolver;
 
@@ -12,7 +18,12 @@ public class TabuSearch {
             final GraphReader graphReader = new GraphReader();
             final Graph graph = graphReader.read();
 
-            final ConfigReader configReader = new ConfigReader();
+            ConfigReader configReader;
+            if (args.length > 0) {
+                configReader = new ConfigArgumentsReader(args);
+            } else {
+                configReader = new ConfigFileReader();
+            }
             final Config config = configReader.read();
 
             final Solver solver = new TabuSearchSolver(config);

@@ -1,4 +1,4 @@
-package pl.edu.pw.elka.tabusearch.io;
+package pl.edu.pw.elka.tabusearch.io.config;
 
 public class Config {
     // parameters for Aspiration Plus Strategy

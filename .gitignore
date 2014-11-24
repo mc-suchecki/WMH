@@ -14,3 +14,7 @@ hs_err_pid*
 # Idea files
 *.iml
 .idea
+
+# Custom files
+out/
+test/graph.txt
