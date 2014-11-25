@@ -12,10 +12,6 @@ public class Graph {
     }
 
     public List<Node> getNodesList() {
-        final List<Node> nodesList = new ArrayList<>();
-        for (final Node node : nodes) {
-            nodesList.add(node);
-        }
-        return nodesList;
+        return new ArrayList<>(nodes);
     }
 }
