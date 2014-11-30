@@ -10,7 +10,10 @@ import pl.edu.pw.elka.tabusearch.optimization.neighbourhood.TwoOptNeighbourhood;
  * @author mc
  */
 public interface BestSolutionFinder {
-    Solution getBestSolution(TwoOptNeighbourhood neighbourhood, TabuList tabuList, Integer threshold);
+    Solution getBestSolution(final TwoOptNeighbourhood neighbourhood,
+                             final TabuList tabuList,
+                             final Integer threshold,
+                             final Solution globallyBestSolution);
 
     Move getLastMove();
 }

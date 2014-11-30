@@ -2,11 +2,12 @@ package pl.edu.pw.elka.tabusearch.optimization;
 
 import pl.edu.pw.elka.tabusearch.domain.Move;
 import pl.edu.pw.elka.tabusearch.domain.Solution;
-import pl.edu.pw.elka.tabusearch.optimization.neighbourhood.NeighboursIterator;
+import pl.edu.pw.elka.tabusearch.optimization.neighbourhood.SolutionMove;
 import pl.edu.pw.elka.tabusearch.optimization.neighbourhood.TwoOptNeighbourhood;
 
 /**
  * Class implementing Aspiration Plus strategy to find best solution in the neighbourhood.
+ *
  * @author mc
  */
 public class AspirationPlusFinder implements BestSolutionFinder {
@@ -27,39 +28,44 @@ public class AspirationPlusFinder implements BestSolutionFinder {
 
     @Override
     public Solution getBestSolution(final TwoOptNeighbourhood neighbourhood, final TabuList tabuList,
-                                    final Integer aspiration) {
-        //TODO co jeśli będzie tylko jedno sąsiednie rozwiązanie (przypadek dla dwóch miast)
-        //TODO przerobić kod tej metody tak, by nie używał iterator.current()
-        final NeighboursIterator iterator = neighbourhood.iterator();
+                                    final Integer aspirationThreshold, final Solution globallyBestSolution) {
+        SolutionMove bestNeighbour = neighbourhood.iterator().next();
+        int solutionChecked = 0;
+        int solutionsSinceAspirationSatisfied = 0;
+        boolean aspirationThresholdReached = false;
+        for (final SolutionMove neighbour : neighbourhood) {
+            final Solution currentSolution = neighbour.getSolution();
+            final Move currentMove = neighbour.getMove();
 
-        Solution bestSolution = iterator.next().getSolution();
-        this.bestMove = iterator.current().getMove();
-        Solution currentSolution = iterator.next().getSolution();
-        Integer solutionsChecked = 1;
-        Integer solutionsSinceAspirationSatisfied = 0;
-
-        do {
-            if (currentSolution.getDistance() < bestSolution.getDistance()) {
-                if (!tabuList.contains(iterator.current().getMove()) || (currentSolution.getDistance() <= aspiration)) {
-                    bestSolution = currentSolution;
-                    this.bestMove = iterator.current().getMove();
-                }
+            if (isAllowed(tabuList, globallyBestSolution, neighbour)
+                    && currentSolution.isBetterThan(bestNeighbour.getSolution())) {
+                bestNeighbour = neighbour;
+                this.bestMove = currentMove;//TODO zmienić, bo słabe
             }
-            if (bestSolution.getDistance() <= aspiration) {
+
+            aspirationThresholdReached |= (currentSolution.getDistance() <= aspirationThreshold);
+            if (aspirationThresholdReached) {
                 ++solutionsSinceAspirationSatisfied;
             }
-            currentSolution = iterator.next().getSolution();
-            ++solutionsChecked;
-        } while (!enoughSolutionsChecked(neighbourhood.size(), solutionsChecked, solutionsSinceAspirationSatisfied));
+            ++solutionChecked;
 
-        return bestSolution;
+            if (enoughSolutionsChecked(solutionChecked, solutionsSinceAspirationSatisfied)) {
+                break;
+            }
+        }
+
+        return bestNeighbour.getSolution();
     }
 
-    private Boolean enoughSolutionsChecked(final Integer neighbourhoodSize, final Integer solutionsChecked,
-                                           final Integer solutionsSinceAspirationSatisfied) {
-        if (neighbourhoodSize <= solutionsChecked) {
-            return true;
-        } else if (solutionsChecked < minParameter) {
+    private boolean isAllowed(final TabuList tabuList, final Solution globallyBestSolution,
+                              final SolutionMove neighbour) {
+        final Move move = neighbour.getMove();
+        final Solution solution = neighbour.getSolution();
+        return !tabuList.contains(move) || solution.isBetterThan(globallyBestSolution);
+    }
+
+    private boolean enoughSolutionsChecked(final int solutionsChecked, final int solutionsSinceAspirationSatisfied) {
+        if (solutionsChecked < minParameter) {
             return false;
         } else if (solutionsChecked > maxParameter) {
             return true;

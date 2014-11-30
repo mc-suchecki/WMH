@@ -31,7 +31,7 @@ public class TabuSearchSolver implements Solver {
 
         while (iterationsWithoutImprovement < 5)  {
             neighbourhood = new TwoOptNeighbourhood(currentSolution);
-            currentSolution = bestSolutionFinder.getBestSolution(neighbourhood, tabuList, aspiration);
+            currentSolution = bestSolutionFinder.getBestSolution(neighbourhood, tabuList, aspiration, bestSolution);
             if (currentSolution.getDistance() < bestSolution.getDistance()) {
                 tabuList.add(bestSolutionFinder.getLastMove());
                 iterationsWithoutImprovement = 0;
