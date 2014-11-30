@@ -10,15 +10,12 @@ import pl.edu.pw.elka.tabusearch.optimization.neighbourhood.TwoOptNeighbourhood;
  *
  * @author mc
  */
-public class AspirationPlusFinder implements BestSolutionFinder {
+public class AspirationPlusFinder implements BestSolutionMoveFinder {
 
     // parameters that define algorithm flow
     private final Integer minParameter;
     private final Integer maxParameter;
     private final Integer plusParameter;
-
-    // move that resulted in generating the best solution
-    private Move bestMove;
 
     public AspirationPlusFinder(final Integer min, final Integer max, final Integer plus) {
         this.minParameter = min;
@@ -27,20 +24,18 @@ public class AspirationPlusFinder implements BestSolutionFinder {
     }
 
     @Override
-    public Solution getBestSolution(final TwoOptNeighbourhood neighbourhood, final TabuList tabuList,
-                                    final Integer aspirationThreshold, final Solution globallyBestSolution) {
+    public SolutionMove getBestSolutionMove(final TwoOptNeighbourhood neighbourhood, final TabuList tabuList,
+                                            final Integer aspirationThreshold, final Solution globallyBestSolution) {
         SolutionMove bestNeighbour = neighbourhood.iterator().next();
         int solutionChecked = 0;
         int solutionsSinceAspirationSatisfied = 0;
         boolean aspirationThresholdReached = false;
         for (final SolutionMove neighbour : neighbourhood) {
             final Solution currentSolution = neighbour.getSolution();
-            final Move currentMove = neighbour.getMove();
 
             if (isAllowed(tabuList, globallyBestSolution, neighbour)
                     && currentSolution.isBetterThan(bestNeighbour.getSolution())) {
                 bestNeighbour = neighbour;
-                this.bestMove = currentMove;//TODO zmienić, bo słabe
             }
 
             aspirationThresholdReached |= (currentSolution.getDistance() <= aspirationThreshold);
@@ -54,7 +49,7 @@ public class AspirationPlusFinder implements BestSolutionFinder {
             }
         }
 
-        return bestNeighbour.getSolution();
+        return bestNeighbour;
     }
 
     private boolean isAllowed(final TabuList tabuList, final Solution globallyBestSolution,
@@ -74,10 +69,4 @@ public class AspirationPlusFinder implements BestSolutionFinder {
         }
         return true;
     }
-
-    @Override
-    public Move getLastMove() {
-        return this.bestMove;
-    }
-
 }

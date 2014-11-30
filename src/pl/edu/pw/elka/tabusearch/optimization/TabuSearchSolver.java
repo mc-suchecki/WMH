@@ -1,9 +1,11 @@
 package pl.edu.pw.elka.tabusearch.optimization;
 
 import pl.edu.pw.elka.tabusearch.domain.Graph;
+import pl.edu.pw.elka.tabusearch.domain.Move;
 import pl.edu.pw.elka.tabusearch.domain.Node;
 import pl.edu.pw.elka.tabusearch.domain.Solution;
 import pl.edu.pw.elka.tabusearch.io.config.Config;
+import pl.edu.pw.elka.tabusearch.optimization.neighbourhood.SolutionMove;
 import pl.edu.pw.elka.tabusearch.optimization.neighbourhood.TwoOptNeighbourhood;
 
 import java.util.List;
@@ -11,29 +13,31 @@ import java.util.List;
 public class TabuSearchSolver implements Solver {
 
     private final InitialSolutionGenerator solutionGenerator = new InitialSolutionGenerator();
-    private final BestSolutionFinder bestSolutionFinder;
+    private final BestSolutionMoveFinder bestSolutionMoveFinder;
 
-    private TabuList tabuList;
+    private final TabuList tabuList;
 
     public TabuSearchSolver(final Config config) {
         this.tabuList = new TabuList(config.getTabuListSize());
-        this.bestSolutionFinder = new AspirationPlusFinder(
+        this.bestSolutionMoveFinder = new AspirationPlusFinder(
                 config.getMinParameter(), config.getMaxParameter(), config.getPlusParameter());
     }
 
     @Override
     public Solution findSolution(final Graph graph) {
+        final Integer aspiration = generateAspirationLevel(graph);
         Solution currentSolution = solutionGenerator.generateInitialSolution(graph);
         Solution bestSolution = currentSolution;
-        TwoOptNeighbourhood neighbourhood;
         Integer iterationsWithoutImprovement = 0;
-        final Integer aspiration = generateAspirationLevel(graph);
 
         while (iterationsWithoutImprovement < 5)  {
-            neighbourhood = new TwoOptNeighbourhood(currentSolution);
-            currentSolution = bestSolutionFinder.getBestSolution(neighbourhood, tabuList, aspiration, bestSolution);
-            if (currentSolution.getDistance() < bestSolution.getDistance()) {
-                tabuList.add(bestSolutionFinder.getLastMove());
+            final TwoOptNeighbourhood neighbourhood = new TwoOptNeighbourhood(currentSolution);
+            final SolutionMove currentSolutionMove = bestSolutionMoveFinder.getBestSolutionMove(
+                    neighbourhood, tabuList, aspiration, bestSolution);
+            currentSolution = currentSolutionMove.getSolution();
+            final Move currentMove = currentSolutionMove.getMove();
+            if (currentSolution.isBetterThan(bestSolution)) {
+                tabuList.add(currentMove);
                 iterationsWithoutImprovement = 0;
                 bestSolution = currentSolution;
             } else {
