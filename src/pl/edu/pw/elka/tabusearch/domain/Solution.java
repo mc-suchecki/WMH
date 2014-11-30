@@ -12,7 +12,7 @@ public class Solution {
     private Integer distance;
 
     public Solution(final List<Node> nodes) {
-        this.nodes = new ArrayList(nodes);
+        this.nodes = new ArrayList<>(nodes);
     }
 
     public List<Node> getNodesList() {
@@ -38,9 +38,17 @@ public class Solution {
         return distance;
     }
 
+    @Override
     public String toString() {
-        String text = new String();
-        for (Node node : nodes) text += node.getLabel() + " ";
-        return text;
+        final StringBuilder sb = new StringBuilder();
+        for (final Node node : nodes) {
+            sb.append(node.getLabel());
+            sb.append(" ");
+        }
+        return sb.toString();
+    }
+
+    public boolean isBetterThan(final Solution another) {
+        return getDistance() < another.getDistance();
     }
 }
