@@ -78,7 +78,7 @@ for size in tabuListSizes:
   timesDictionary[size] = time
   resultsDictionary[size] = result
 plotGraph(timesDictionary, "Rozmiar listy Tabu", "Czas (ms)", 0)
-plotGraph(timesDictionary, "Rozmiar listy Tabu", "Wynik (długość ścieżki)", 1)
+plotGraph(resultsDictionary, "Rozmiar listy Tabu", "Wynik (długość ścieżki)", 1)
 timesDictionary = {}
 resultsDictionary = {}
 
@@ -89,7 +89,7 @@ for parameter in plusParameters:
   timesDictionary[parameter] = time
   resultsDictionary[parameter] = result
 plotGraph(timesDictionary, "Wartość parametru Plus", "Czas (ms)", 2)
-plotGraph(timesDictionary, "Wartość parametru Plus", "Wynik (długość ścieżki)", 3)
+plotGraph(resultsDictionary, "Wartość parametru Plus", "Wynik (długość ścieżki)", 3)
 timesDictionary = {}
 resultsDictionary = {}
 
@@ -103,7 +103,7 @@ for parameter in minParameters:
   timesDictionary[parameter] = time
   resultsDictionary[parameter] = result
 plotGraph(timesDictionary, "Wartość parametru Min", "Czas (ms)", 4)
-plotGraph(timesDictionary, "Wartość parametru Min", "Wynik (długość ścieżki)", 5)
+plotGraph(resultsDictionary, "Wartość parametru Min", "Wynik (długość ścieżki)", 5)
 timesDictionary = {}
 resultsDictionary = {}
 
@@ -117,6 +117,6 @@ for parameter in maxParameters:
   timesDictionary[parameter] = time
   resultsDictionary[parameter] = result
 plotGraph(timesDictionary, "Wartość parametru Max", "Czas (ms)", 6)
-plotGraph(timesDictionary, "Wartość parametru Max", "Wynik (długość ścieżki)", 7)
+plotGraph(resultsDictionary, "Wartość parametru Max", "Wynik (długość ścieżki)", 7)
 timesDictionary = {}
 resultsDictionary = {}
