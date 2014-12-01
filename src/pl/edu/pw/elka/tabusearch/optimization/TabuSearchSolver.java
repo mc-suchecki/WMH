@@ -25,7 +25,7 @@ public class TabuSearchSolver implements Solver {
 
     @Override
     public Solution findSolution(final Graph graph) {
-        final Integer aspiration = generateAspirationLevel(graph);
+        Integer aspiration = generateAspirationLevel(graph);
         Solution currentSolution = solutionGenerator.generateInitialSolution(graph);
         Solution bestSolution = currentSolution;
         Integer iterationsWithoutImprovement = 0;
@@ -43,13 +43,14 @@ public class TabuSearchSolver implements Solver {
             } else {
                 iterationsWithoutImprovement++;
             }
+            aspiration = adjustAspiration(aspiration, bestSolution.getDistance());
         }
 
         return bestSolution;
     }
 
     /**
-     * Returns aspiration level - here defined as sum of every node's average distance to another.
+     * Returns initial aspiration level - here defined as sum of every node's average distance to another.
      * @param graph graph to analyze
      * @return aspiration level
      */
@@ -61,4 +62,20 @@ public class TabuSearchSolver implements Solver {
         }
         return aspirationLevel;
     }
+
+    /**
+     * Returns adjusted aspiration level - if algorithm found a solution with shorter path that aspiration number,
+     * it is adjusting aspiration by half of the difference between old aspiration and shortest path found so far.
+     * @param oldAspiration old aspiration level - before adjustment
+     * @param bestPathLength length of the best path found so far
+     * @return adjusted aspiration level
+     */
+    private Integer adjustAspiration(final Integer oldAspiration, final Integer bestPathLength) {
+        if (oldAspiration < bestPathLength) {
+            return oldAspiration;
+        } else {
+            return (oldAspiration + bestPathLength) / 2;
+        }
+    }
+
 }
