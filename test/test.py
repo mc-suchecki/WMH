@@ -8,6 +8,7 @@ import random
 import timeit
 import itertools
 import subprocess
+import matplotlib.pyplot as plt
 
 ############################## FUNCTIONS ##############################
 
@@ -30,8 +31,8 @@ def saveRandomGraphToFile(filename, verticlesCount):
 
 # runs the solver with desired parameters
 def runSolver(parameters):
-  command = ["java", "-jar", "./solver.jar", "-tabuSize", parameters[0],\
-          "-plus", parameters[1], "-min", parameters[2], "-max", parameters[3]]
+  command = ["java", "-jar", "./solver.jar", "-tabuSize", str(parameters[0]),\
+          "-plus", str(parameters[1]), "-min", str(parameters[2]), "-max", str(parameters[3])]
   result = subprocess.check_output(command)
   return int(result)
 
@@ -43,19 +44,27 @@ def runSolverAndMeasureTime(parameters):
   time = stop - start
   return time, result
 
+# plots a simple graph
+def plotGraph(data, xlabel, ylabel, figureNumber):
+  plt.figure(figureNumber)
+  plt.plot(list(data.keys()), list(data.values()))
+  plt.ylabel(ylabel)
+  plt.xlabel(xlabel)
+  plt.show()
+
 ############################## SCRIPT ##############################
 
 # parameters to test
-defaultTabuSize = 25
+defaultTabuSize = 10
 defaultPlus = 5
 defaultMin = 20
 defaultMax = 40
-tabuListSizes = range(10,100)
+tabuListSizes = range(0,50)
 plusParameters = range(0,100)
 minParameters = range(0,100)
 maxParameters = range(0,100)
 
-# empty dictionaries keeping data
+# create dictionaries for plotting
 timesDictionary = {}
 resultsDictionary = {}
 
@@ -68,7 +77,8 @@ for size in tabuListSizes:
   time, result = runSolverAndMeasureTime(parameters)
   timesDictionary[size] = time
   resultsDictionary[size] = result
-# TODO draw relationship between solver performance and tabuListSize
+plotGraph(timesDictionary, "Rozmiar listy Tabu", "Czas (ms)", 0)
+plotGraph(timesDictionary, "Rozmiar listy Tabu", "Wynik (długość ścieżki)", 1)
 timesDictionary = {}
 resultsDictionary = {}
 
@@ -78,24 +88,35 @@ for parameter in plusParameters:
   time, result = runSolverAndMeasureTime(parameters)
   timesDictionary[parameter] = time
   resultsDictionary[parameter] = result
-# TODO draw relationship between solver performance and plusParameter
+plotGraph(timesDictionary, "Wartość parametru Plus", "Czas (ms)", 2)
+plotGraph(timesDictionary, "Wartość parametru Plus", "Wynik (długość ścieżki)", 3)
 timesDictionary = {}
 resultsDictionary = {}
 
 # test how changing min parameter affects performance
 for parameter in minParameters:
-  # run solver
-  # collect run time and result
-  pass
-# TODO draw relationship between solver performance and minParameter
+  if parameter < defaultMax:
+    parameters = (defaultTabuSize, defaultPlus, parameter, defaultMax)
+  else:
+    parameters = (defaultTabuSize, defaultPlus, parameter, parameter + 10)
+  time, result = runSolverAndMeasureTime(parameters)
+  timesDictionary[parameter] = time
+  resultsDictionary[parameter] = result
+plotGraph(timesDictionary, "Wartość parametru Min", "Czas (ms)", 4)
+plotGraph(timesDictionary, "Wartość parametru Min", "Wynik (długość ścieżki)", 5)
 timesDictionary = {}
 resultsDictionary = {}
 
 # test how changing max parameter affects performance
 for parameter in maxParameters:
-  # run solver
-  # collect run time and result
-  pass
-# TODO draw relationship between solver performance and maxParameter
+  if parameter > defaultMin:
+    parameters = (defaultTabuSize, defaultPlus, defaultMin, parameter)
+  else:
+    parameters = (defaultTabuSize, defaultPlus, parameter - 10, parameter)
+  time, result = runSolverAndMeasureTime(parameters)
+  timesDictionary[parameter] = time
+  resultsDictionary[parameter] = result
+plotGraph(timesDictionary, "Wartość parametru Max", "Czas (ms)", 6)
+plotGraph(timesDictionary, "Wartość parametru Max", "Wynik (długość ścieżki)", 7)
 timesDictionary = {}
 resultsDictionary = {}
