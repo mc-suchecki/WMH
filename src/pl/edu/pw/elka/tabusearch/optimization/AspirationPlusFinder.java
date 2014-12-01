@@ -60,10 +60,10 @@ public class AspirationPlusFinder implements BestSolutionMoveFinder {
     }
 
     private boolean enoughSolutionsChecked(final int solutionsChecked, final int solutionsSinceAspirationSatisfied) {
-        if (solutionsChecked < minParameter) {
-            return false;
-        } else if (solutionsChecked > maxParameter) {
+        if (solutionsChecked > maxParameter) {
             return true;
+        } else if (solutionsChecked < minParameter) {
+            return false;
         } else if (solutionsSinceAspirationSatisfied < plusParameter) {
             return false;
         }
