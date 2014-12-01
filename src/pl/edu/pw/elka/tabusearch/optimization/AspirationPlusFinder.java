@@ -24,12 +24,13 @@ public class AspirationPlusFinder implements BestSolutionMoveFinder {
     }
 
     @Override
-    public SolutionMove getBestSolutionMove(final TwoOptNeighbourhood neighbourhood, final TabuList tabuList,
-                                            final Integer aspirationThreshold, final Solution globallyBestSolution) {
+    public SolutionMove getBestNeighbour(final TwoOptNeighbourhood neighbourhood, final TabuList tabuList,
+                                         final Integer aspirationThreshold, final Solution globallyBestSolution) {
         SolutionMove bestNeighbour = neighbourhood.iterator().next();
-        int solutionChecked = 0;
-        int solutionsSinceAspirationSatisfied = 0;
+        int neighboursChecked = 0;
+        int neighboursSinceAspirationSatisfied = 0;
         boolean aspirationThresholdReached = false;
+
         for (final SolutionMove neighbour : neighbourhood) {
             final Solution currentSolution = neighbour.getSolution();
 
@@ -40,11 +41,11 @@ public class AspirationPlusFinder implements BestSolutionMoveFinder {
 
             aspirationThresholdReached |= (currentSolution.getDistance() <= aspirationThreshold);
             if (aspirationThresholdReached) {
-                ++solutionsSinceAspirationSatisfied;
+                ++neighboursSinceAspirationSatisfied;
             }
-            ++solutionChecked;
+            ++neighboursChecked;
 
-            if (enoughSolutionsChecked(solutionChecked, solutionsSinceAspirationSatisfied)) {
+            if (enoughSolutionsChecked(neighboursChecked, neighboursSinceAspirationSatisfied)) {
                 break;
             }
         }
