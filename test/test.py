@@ -2,7 +2,6 @@
 # parameters affects its performance by generating graphs and launching solver.
 # Author:       Maciej 'mc' Suchecki
 
-import os
 import string
 import random
 import timeit
@@ -48,8 +47,8 @@ def runSolverAndMeasureTime(parameters):
 def plotGraph(data, xlabel, ylabel, figureNumber):
   plt.figure(figureNumber)
   plt.plot(list(data.keys()), list(data.values()))
-  plt.ylabel(ylabel)
   plt.xlabel(xlabel)
+  plt.ylabel(ylabel)
   plt.show()
 
 ############################## SCRIPT ##############################
