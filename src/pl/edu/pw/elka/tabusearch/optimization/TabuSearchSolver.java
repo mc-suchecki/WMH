@@ -28,6 +28,7 @@ public class TabuSearchSolver implements Solver {
         Integer aspiration = generateAspirationLevel(graph);
         Solution currentSolution = solutionGenerator.generateInitialSolution(graph);
         Solution bestSolution = currentSolution;
+        Solution previousSolution = currentSolution;
         Integer iterationsWithoutImprovement = 0;
 
         while (iterationsWithoutImprovement < 5)  {
@@ -36,13 +37,17 @@ public class TabuSearchSolver implements Solver {
                     neighbourhood, tabuList, aspiration, bestSolution);
             currentSolution = currentSolutionMove.getSolution();
             final Move currentMove = currentSolutionMove.getMove();
-            if (currentSolution.isBetterThan(bestSolution)) {
-                tabuList.add(currentMove);
+            tabuList.add(currentMove);
+
+            iterationsWithoutImprovement++;
+            if (currentSolution.isBetterThan(previousSolution)) {
                 iterationsWithoutImprovement = 0;
-                bestSolution = currentSolution;
-            } else {
-                iterationsWithoutImprovement++;
             }
+            if (currentSolution.isBetterThan(bestSolution)) {
+                bestSolution = currentSolution;
+            }
+
+            previousSolution = currentSolution;
             aspiration = adjustAspiration(aspiration, bestSolution.getDistance());
         }
 
