@@ -9,7 +9,7 @@ import java.util.Set;
 /**
  * Container for storing moves done during tabu search.
  */
-public class TabuList {
+class TabuList {
     private final Integer tabuListMaxSize;
     private Integer size;
 

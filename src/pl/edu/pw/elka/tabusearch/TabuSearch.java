@@ -12,7 +12,7 @@ import pl.edu.pw.elka.tabusearch.io.config.ConfigReader;
 import pl.edu.pw.elka.tabusearch.optimization.Solver;
 import pl.edu.pw.elka.tabusearch.optimization.TabuSearchSolver;
 
-public class TabuSearch {
+class TabuSearch {
     public static void main(final String[] args) {
         try {
             ConfigReader configReader;

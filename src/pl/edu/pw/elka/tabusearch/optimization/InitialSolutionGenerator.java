@@ -7,7 +7,7 @@ import pl.edu.pw.elka.tabusearch.domain.Solution;
  * Class representing generator of initial solution - in this case generates Solution containing a random set of nodes.
  * @author mc
  */
-public class InitialSolutionGenerator {
+class InitialSolutionGenerator {
 
     public Solution generateInitialSolution(final Graph graph) {
         // just return path containing all cities in default order

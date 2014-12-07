@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Map;
 
 public class GraphReader {
-    public static final String LINE_FORMAT_MESSAGE =
+    private static final String LINE_FORMAT_MESSAGE =
             "Each line should have the following format: LABEL LABEL WEIGHT(integer)";
     private final String inputFileName;
 

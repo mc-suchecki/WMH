@@ -9,7 +9,7 @@ import pl.edu.pw.elka.tabusearch.optimization.neighbourhood.TwoOptNeighbourhood;
  *
  * @author mc
  */
-public interface BestSolutionMoveFinder {
+interface BestSolutionMoveFinder {
     SolutionMove getBestNeighbour(final TwoOptNeighbourhood neighbourhood,
                                   final TabuList tabuList,
                                   final Integer threshold,

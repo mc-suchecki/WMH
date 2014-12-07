@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Node {
     private final String label;
-    private Map<String, Integer> distancesMap;
+    private final Map<String, Integer> distancesMap;
 
     public Node(final String label) {
         this.label = label;

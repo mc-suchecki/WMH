@@ -4,7 +4,7 @@
  */
 package pl.edu.pw.elka.tabusearch.io;
 
-public class InvalidDataFormatException extends Exception {
+class InvalidDataFormatException extends Exception {
     public InvalidDataFormatException(final String message) {
         super(message);
     }

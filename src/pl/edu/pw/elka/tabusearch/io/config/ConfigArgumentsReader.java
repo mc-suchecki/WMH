@@ -11,20 +11,28 @@ public class ConfigArgumentsReader implements ConfigReader {
         // default parameters and graph filename
         Integer min = 20, max = 40, plus = 5, tabuSize = 25;
         String graphFilename = DEFAULT_INPUT_FILE_NAME;
+
         for (Integer i = 0; i < args.length; ++i) {
             String argument = args[i];
-            if (argument.equals("-min")) {
-                min = new Integer(args[++i]);
-            } else if (argument.equals("-max")) {
-                max = new Integer(args[++i]);
-            } else if (argument.equals("-plus")) {
-                plus = new Integer(args[++i]);
-            } else if (argument.equals("-tabuSize")) {
-                tabuSize = new Integer(args[++i]);
-            } else if (argument.equals("-graph")) {
-                graphFilename = new String(args[++i]);
+            switch (argument) {
+                case "-min":
+                    min = new Integer(args[++i]);
+                    break;
+                case "-max":
+                    max = new Integer(args[++i]);
+                    break;
+                case "-plus":
+                    plus = new Integer(args[++i]);
+                    break;
+                case "-tabuSize":
+                    tabuSize = new Integer(args[++i]);
+                    break;
+                case "-graph":
+                    graphFilename = args[++i];
+                    break;
             }
         }
+
         this.solverConfig = new Config(min, max, plus, tabuSize);
         this.graphFilename = graphFilename;
     }

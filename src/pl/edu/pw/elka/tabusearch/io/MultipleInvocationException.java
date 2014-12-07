@@ -4,5 +4,5 @@
  */
 package pl.edu.pw.elka.tabusearch.io;
 
-public class MultipleInvocationException extends Exception {
+class MultipleInvocationException extends Exception {
 }

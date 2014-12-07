@@ -16,14 +16,6 @@ public class Move {
         this.swapEnd = swapEnd;
     }
 
-    public Integer getSwapStart() {
-        return swapStart;
-    }
-
-    public Integer getSwapEnd() {
-        return swapEnd;
-    }
-
     @Override
     public int hashCode() {
         return Objects.hash(swapStart, swapEnd);
