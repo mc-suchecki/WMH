@@ -26,7 +26,7 @@ def saveRandomGraphToFile(filename, verticlesCount):
 def saveRandomGraphsToFiles(graphsCount, verticlesCount):
   filenamesList = []
   for number in range(0, graphsCount):
-    filename = './graph' + number + '.txt'
+    filename = './graph' + str(number) + '.txt'
     saveRandomGraphToFile(filename, verticlesCount)
     filenamesList.append(filename)
   return filenamesList

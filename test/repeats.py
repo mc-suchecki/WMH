@@ -4,9 +4,9 @@ import matplotlib.pyplot as plot
 
 ############################ FUNCTIONS ############################
 
-# runs the solver with default parameters
-def runSolver():
-  command = ["java", "-jar", "./solver.jar"]
+# runs the solver with default parameters and pass the input filename
+def runSolver(filename):
+  command = ["java", "-jar", "./solver.jar", "-graph", str(filename)]
   result = subprocess.check_output(command)
   return int(result)
 
@@ -18,12 +18,16 @@ def plotGraph(data, xlabel, ylabel):
   plot.show()
 
 ############################## SCRIPT ##############################
+maxIterations = 50
+graphSize =  10
+
 averageResults = {}
-for iterations in range(1,20):
+filenames = graph.saveRandomGraphsToFiles(maxIterations, graphSize)
+for iterations in range(1, maxIterations):
   print(iterations)
   sumOfResults = 0
   for j in range(iterations):
-    sumOfResults += runSolver()
+    sumOfResults += runSolver(filenames[j])
   averageResults[iterations] = sumOfResults / iterations
 
-plotGraph(averageResults, "Iterations", "Average result")
+plotGraph(averageResults, "Liczba iteracji", "Średni wynik")

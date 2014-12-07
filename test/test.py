@@ -43,10 +43,10 @@ defaultTabuSize = 10
 defaultPlus = 5
 defaultMin = 20
 defaultMax = 40
-tabuListSizes = range(0,50)
-plusParameters = range(0,100)
-minParameters = range(0,100)
-maxParameters = range(0,100)
+tabuListSizes = range(0, 50)
+plusParameters = range(0, 100)
+minParameters = range(0, 100)
+maxParameters = range(0, 100)
 
 # create dictionaries for plotting
 timesDictionary = {}
