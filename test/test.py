@@ -7,22 +7,41 @@ import timeit
 import subprocess
 import matplotlib.pyplot as plot
 
+############################## PARAMETERS ##############################
+
+repetitions = 10    # how many times solver will be re-run to calculate avg
+graphSize = 20      # size of the graphs to generate for tests purpose
+
 ############################## FUNCTIONS ##############################
 
 # runs the solver with desired parameters
-def runSolver(parameters):
-  command = ["java", "-jar", "./solver.jar", "-graph", "./graph.txt", "-tabuSize", str(parameters[0]),\
-          "-plus", str(parameters[1]), "-min", str(parameters[2]), "-max", str(parameters[3])]
+def runSolver(parameters, graphFilename):
+  command = ["java", "-jar", "./solver.jar", "-graph", str(graphFilename),\
+          "-tabuSize", str(parameters[0]), "-plus", str(parameters[1]),\
+          "-min", str(parameters[2]), "-max", str(parameters[3])]
   result = subprocess.check_output(command)
   return int(result)
 
 # runs solver, gets result and run time
-def runSolverAndMeasureTime(parameters):
+def runSolverAndMeasureTime(parameters, graphFilename):
   start = timeit.default_timer()
-  result = runSolver(parameters)
+  result = runSolver(parameters, graphFilename)
   stop = timeit.default_timer()
   time = stop - start
   return time, result
+
+# runs solver multiple times with different graphs
+# and collects average result and average time
+def collectAverageTimeAndResult(parameters, graphFilenames):
+  averageTime = 0
+  averageResult = 0
+  for graph in graphFilenames:
+    time, result = runSolverAndMeasureTime(parameters, graph)
+    averageTime += time
+    averageResult += result
+  averageTime /= repetitions
+  averageResult /= repetitions
+  return averageTime, averageResult
 
 # plots a graph containing 2 relationships: time(parameter) and result(parameter)
 def plotGraph(times, results, xlabel):
@@ -40,25 +59,25 @@ def plotGraph(times, results, xlabel):
 
 # parameters to test
 defaultTabuSize = 10
-defaultPlus = 5
 defaultMin = 20
 defaultMax = 40
+defaultPlus = 5
 tabuListSizes = range(0, 50)
-plusParameters = range(0, 100)
 minParameters = range(0, 100)
 maxParameters = range(0, 100)
+plusParameters = range(0, 100)
 
 # create dictionaries for plotting
 timesDictionary = {}
 resultsDictionary = {}
 
-# generate random complete graph and save it to file
-graph.saveRandomGraphToFile("./graph.txt", 20)
+# generate random complete graphs
+graphFilenames = graph.saveRandomGraphsToFiles(repetitions, graphSize)
 
 # test how changing tabu list size affects performance
 for size in tabuListSizes:
   parameters = (size, defaultPlus, defaultMin, defaultMax)
-  time, result = runSolverAndMeasureTime(parameters)
+  time, result = collectAverageTimeAndResult(parameters, graphFilenames)
   timesDictionary[size] = time
   resultsDictionary[size] = result
 plotGraph(timesDictionary, resultsDictionary, "Rozmiar listy Tabu")
@@ -68,7 +87,7 @@ resultsDictionary = {}
 # test how changing plus parameter affects performance
 for parameter in plusParameters:
   parameters = (defaultTabuSize, parameter, defaultMin, defaultMax)
-  time, result = runSolverAndMeasureTime(parameters)
+  time, result = collectAverageTimeAndResult(parameters, graphFilenames)
   timesDictionary[parameter] = time
   resultsDictionary[parameter] = result
 plotGraph(timesDictionary, resultsDictionary, "Wartość parametru Plus")
@@ -81,7 +100,7 @@ for parameter in minParameters:
     parameters = (defaultTabuSize, defaultPlus, parameter, defaultMax)
   else:
     parameters = (defaultTabuSize, defaultPlus, parameter, parameter + 10)
-  time, result = runSolverAndMeasureTime(parameters)
+  time, result = collectAverageTimeAndResult(parameters, graphFilenames)
   timesDictionary[parameter] = time
   resultsDictionary[parameter] = result
 plotGraph(timesDictionary, resultsDictionary, "Wartość parametru Min")
@@ -94,7 +113,7 @@ for parameter in maxParameters:
     parameters = (defaultTabuSize, defaultPlus, defaultMin, parameter)
   else:
     parameters = (defaultTabuSize, defaultPlus, parameter - 10, parameter)
-  time, result = runSolverAndMeasureTime(parameters)
+  time, result = collectAverageTimeAndResult(parameters, graphFilenames)
   timesDictionary[parameter] = time
   resultsDictionary[parameter] = result
 plotGraph(timesDictionary, resultsDictionary, "Wartość parametru Max")
