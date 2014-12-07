@@ -2,31 +2,12 @@
 # parameters affects its performance by generating graphs and launching solver.
 # Author:       Maciej 'mc' Suchecki
 
-import string
-import random
+import graph
 import timeit
-import itertools
 import subprocess
 import matplotlib.pyplot as plot
 
 ############################## FUNCTIONS ##############################
-
-# generates random complete graph with desired amount of verticles
-# and saves the edges to selected filename
-# verticles count is max 26, because of conversion to letters
-def saveRandomGraphToFile(filename, verticlesCount):
-  graphFile = open(filename, "w")
-
-  verticles = list(string.ascii_uppercase)
-  verticles = verticles[:verticlesCount]
-
-  # iterate over every possible pair containing two different verticles - which
-  # means every edge in undirected complete graph - and write it to the file
-  for edge in itertools.combinations(verticles, 2):
-    weight = str(random.randint(1, 100)) 
-    graphFile.write(edge[0] + " " + edge[1] + " " + weight + "\n")
-
-  graphFile.close()
 
 # runs the solver with desired parameters
 def runSolver(parameters):
@@ -72,7 +53,7 @@ timesDictionary = {}
 resultsDictionary = {}
 
 # generate random complete graph and save it to file
-saveRandomGraphToFile("./graph.txt", 20)
+graph.saveRandomGraphToFile("./graph.txt", 20)
 
 # test how changing tabu list size affects performance
 for size in tabuListSizes:

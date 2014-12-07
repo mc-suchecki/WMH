@@ -1,3 +1,4 @@
+import graph
 import subprocess
 import matplotlib.pyplot as plot
 
