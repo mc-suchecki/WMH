@@ -7,7 +7,7 @@ import random
 import timeit
 import itertools
 import subprocess
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plot
 
 ############################## FUNCTIONS ##############################
 
@@ -43,13 +43,17 @@ def runSolverAndMeasureTime(parameters):
   time = stop - start
   return time, result
 
-# plots a simple graph
-def plotGraph(data, xlabel, ylabel, figureNumber):
-  plt.figure(figureNumber)
-  plt.plot(list(data.keys()), list(data.values()))
-  plt.xlabel(xlabel)
-  plt.ylabel(ylabel)
-  plt.show()
+# plots a graph containing 2 relationships: time(parameter) and result(parameter)
+def plotGraph(times, results, xlabel):
+  figure, axis1 = plot.subplots()
+  axis2 = axis1.twinx()
+  time, = axis1.plot(list(times.keys()), list(times.values()), 'r-')
+  result, = axis2.plot(list(results.keys()), list(results.values()), 'g-')
+  axis1.legend([time, result], ['Czas', 'Wynik'], 'upper right')
+  axis1.set_xlabel(xlabel)
+  axis1.set_ylabel('Czas (ms)')
+  axis2.set_ylabel('Wynik (długość ścieżki)')
+  plot.show()
 
 ############################## SCRIPT ##############################
 
@@ -76,8 +80,7 @@ for size in tabuListSizes:
   time, result = runSolverAndMeasureTime(parameters)
   timesDictionary[size] = time
   resultsDictionary[size] = result
-plotGraph(timesDictionary, "Rozmiar listy Tabu", "Czas (ms)", 0)
-plotGraph(resultsDictionary, "Rozmiar listy Tabu", "Wynik (długość ścieżki)", 1)
+plotGraph(timesDictionary, resultsDictionary, "Rozmiar listy Tabu")
 timesDictionary = {}
 resultsDictionary = {}
 
@@ -87,8 +90,7 @@ for parameter in plusParameters:
   time, result = runSolverAndMeasureTime(parameters)
   timesDictionary[parameter] = time
   resultsDictionary[parameter] = result
-plotGraph(timesDictionary, "Wartość parametru Plus", "Czas (ms)", 2)
-plotGraph(resultsDictionary, "Wartość parametru Plus", "Wynik (długość ścieżki)", 3)
+plotGraph(timesDictionary, resultsDictionary, "Wartość parametru Plus")
 timesDictionary = {}
 resultsDictionary = {}
 
@@ -101,8 +103,7 @@ for parameter in minParameters:
   time, result = runSolverAndMeasureTime(parameters)
   timesDictionary[parameter] = time
   resultsDictionary[parameter] = result
-plotGraph(timesDictionary, "Wartość parametru Min", "Czas (ms)", 4)
-plotGraph(resultsDictionary, "Wartość parametru Min", "Wynik (długość ścieżki)", 5)
+plotGraph(timesDictionary, resultsDictionary, "Wartość parametru Min")
 timesDictionary = {}
 resultsDictionary = {}
 
@@ -115,7 +116,6 @@ for parameter in maxParameters:
   time, result = runSolverAndMeasureTime(parameters)
   timesDictionary[parameter] = time
   resultsDictionary[parameter] = result
-plotGraph(timesDictionary, "Wartość parametru Max", "Czas (ms)", 6)
-plotGraph(resultsDictionary, "Wartość parametru Max", "Wynik (długość ścieżki)", 7)
+plotGraph(timesDictionary, resultsDictionary, "Wartość parametru Max")
 timesDictionary = {}
 resultsDictionary = {}

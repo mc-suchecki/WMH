@@ -1,5 +1,5 @@
 import subprocess
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plot
 
 ############################ FUNCTIONS ############################
 
@@ -11,10 +11,10 @@ def runSolver():
 
 # plots a simple graph
 def plotGraph(data, xlabel, ylabel):
-  plt.plot(list(data.keys()), list(data.values()))
-  plt.xlabel(xlabel)
-  plt.ylabel(ylabel)
-  plt.show()
+  plot.plot(list(data.keys()), list(data.values()))
+  plot.xlabel(xlabel)
+  plot.ylabel(ylabel)
+  plot.show()
 
 ############################## SCRIPT ##############################
 averageResults = {}
