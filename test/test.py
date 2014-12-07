@@ -2,6 +2,7 @@
 # parameters affects its performance by generating graphs and launching solver.
 # Author:       Maciej 'mc' Suchecki
 
+import sys
 import graph
 import timeit
 import subprocess
@@ -55,27 +56,33 @@ def plotGraph(times, results, xlabel):
   axis2.set_ylabel('Wynik (długość ścieżki)')
   plot.show()
 
+def displayProgress(currentNumber, lastNumber):
+  sys.stdout.write("\r%d/%d" % (currentNumber, lastNumber))
+
 ############################## SCRIPT ##############################
 
 # parameters to test
-defaultTabuSize = 10
-defaultMin = 20
-defaultMax = 40
+defaultTabuSize = 20
+defaultMin = 10
+defaultMax = 25
 defaultPlus = 5
-tabuListSizes = range(0, 50)
-minParameters = range(0, 100)
-maxParameters = range(0, 100)
-plusParameters = range(0, 100)
+tabuListSizes = range(1, 51)
+minParameters = range(0, 101)
+maxParameters = range(0, 101)
+plusParameters = range(0, 101)
 
 # create dictionaries for plotting
 timesDictionary = {}
 resultsDictionary = {}
 
 # generate random complete graphs
+print("Generating test graphs...")
 graphFilenames = graph.saveRandomGraphsToFiles(repetitions, graphSize)
 
 # test how changing tabu list size affects performance
+print("Testing Tabu list size...")
 for size in tabuListSizes:
+  displayProgress(size, tabuListSizes[-1])
   parameters = (size, defaultPlus, defaultMin, defaultMax)
   time, result = collectAverageTimeAndResult(parameters, graphFilenames)
   timesDictionary[size] = time
@@ -85,7 +92,9 @@ timesDictionary = {}
 resultsDictionary = {}
 
 # test how changing plus parameter affects performance
+print("Testing Plus parameter...")
 for parameter in plusParameters:
+  displayProgress(parameter, plusParameters[-1])
   parameters = (defaultTabuSize, parameter, defaultMin, defaultMax)
   time, result = collectAverageTimeAndResult(parameters, graphFilenames)
   timesDictionary[parameter] = time
@@ -95,7 +104,9 @@ timesDictionary = {}
 resultsDictionary = {}
 
 # test how changing min parameter affects performance
+print("Testing Min parameter...")
 for parameter in minParameters:
+  displayProgress(parameter, minParameters[-1])
   if parameter < defaultMax:
     parameters = (defaultTabuSize, defaultPlus, parameter, defaultMax)
   else:
@@ -108,7 +119,9 @@ timesDictionary = {}
 resultsDictionary = {}
 
 # test how changing max parameter affects performance
+print("Testing Max parameter...")
 for parameter in maxParameters:
+  displayProgress(parameter, maxParameters[-1])
   if parameter > defaultMin:
     parameters = (defaultTabuSize, defaultPlus, defaultMin, parameter)
   else:
