@@ -11,17 +11,21 @@ import java.util.HashSet;
 import java.util.Map;
 
 public class GraphReader {
-    private static final String INPUT_FILE_NAME = "test/simple_graph.txt";
     public static final String LINE_FORMAT_MESSAGE =
             "Each line should have the following format: LABEL LABEL WEIGHT(integer)";
+    private final String inputFileName;
 
     private Map<String, Node> nodeMap;
     private Integer edgesCount;
 
+    public GraphReader(final String inputFileName) {
+        this.inputFileName = inputFileName;
+    }
+
     public Graph read() throws IOException, MultipleInvocationException, InvalidDataFormatException {
         initReader();
 
-        try (BufferedReader br = new BufferedReader(new FileReader(INPUT_FILE_NAME))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(inputFileName))) {
             String strLine;
             while ((strLine = br.readLine()) != null) {
                 processLine(strLine);

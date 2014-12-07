@@ -11,7 +11,7 @@ import matplotlib.pyplot as plot
 
 # runs the solver with desired parameters
 def runSolver(parameters):
-  command = ["java", "-jar", "./solver.jar", "-tabuSize", str(parameters[0]),\
+  command = ["java", "-jar", "./solver.jar", "-graph", "./graph.txt", "-tabuSize", str(parameters[0]),\
           "-plus", str(parameters[1]), "-min", str(parameters[2]), "-max", str(parameters[3])]
   result = subprocess.check_output(command)
   return int(result)

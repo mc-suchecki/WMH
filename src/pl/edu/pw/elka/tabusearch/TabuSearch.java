@@ -15,16 +15,17 @@ import pl.edu.pw.elka.tabusearch.optimization.TabuSearchSolver;
 public class TabuSearch {
     public static void main(final String[] args) {
         try {
-            final GraphReader graphReader = new GraphReader();
-            final Graph graph = graphReader.read();
-
             ConfigReader configReader;
             if (args.length > 0) {
                 configReader = new ConfigArgumentsReader(args);
             } else {
                 configReader = new ConfigFileReader();
             }
-            final Config config = configReader.read();
+            final Config config = configReader.getSolverConfig();
+            final String graphFilename = configReader.getGraphFilename();
+
+            final GraphReader graphReader = new GraphReader(graphFilename);
+            final Graph graph = graphReader.read();
 
             final Solver solver = new TabuSearchSolver(config);
             final Solution solution = solver.findSolution(graph);

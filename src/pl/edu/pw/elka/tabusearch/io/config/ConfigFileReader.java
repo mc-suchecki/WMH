@@ -6,10 +6,10 @@ import java.io.IOException;
 import java.util.Properties;
 
 public class ConfigFileReader implements ConfigReader {
-    private static final String CONFIG_FILE_NAME = "test/config.properties";
+    private static final String CONFIG_FILE_NAME = "config.properties";
 
     @Override
-    public Config read() throws IOException, NumberFormatException {
+    public Config getSolverConfig() throws IOException, NumberFormatException {
         final Properties properties = loadProperties();
         final Integer minParameter = Integer.parseInt(properties.getProperty("minParameter"));
         final Integer maxParameter = Integer.parseInt(properties.getProperty("maxParameter"));
@@ -17,6 +17,12 @@ public class ConfigFileReader implements ConfigReader {
         final Integer tabuListSize = Integer.parseInt(properties.getProperty("tabuListSize"));
 
         return new Config(minParameter, maxParameter, plusParameter, tabuListSize);
+    }
+
+    @Override
+    public String getGraphFilename() throws IOException {
+        final Properties properties = loadProperties();
+        return properties.getProperty("graphFilename");
     }
 
     private Properties loadProperties() throws IOException {
