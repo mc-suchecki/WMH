@@ -62,14 +62,14 @@ def displayProgress(currentNumber, lastNumber):
 ############################## SCRIPT ##############################
 
 # parameters to test
-defaultTabuSize = 20
+defaultTabuSize = 15
 defaultMin = 10
-defaultMax = 25
+defaultMax = 20
 defaultPlus = 5
 tabuListSizes = range(1, 51)
-minParameters = range(0, 101)
-maxParameters = range(0, 101)
-plusParameters = range(0, 101)
+minParameters = range(1, 91)
+maxParameters = range(11, 101)
+plusParameters = range(1, 101)
 
 # create dictionaries for plotting
 timesDictionary = {}
@@ -132,3 +132,7 @@ for parameter in maxParameters:
 plotGraph(timesDictionary, resultsDictionary, "Wartość parametru Max")
 timesDictionary = {}
 resultsDictionary = {}
+
+# remove graph files
+for filename in graphFilenames:
+  os.remove(filename)

@@ -1,4 +1,5 @@
 import os
+import sys
 import graph
 import subprocess
 import matplotlib.pyplot as plot
@@ -18,10 +19,13 @@ def plotGraph(data, xlabel, ylabel):
   plot.ylabel(ylabel)
   plot.show()
 
+def displayProgress(currentNumber, lastNumber):
+  sys.stdout.write("\r%d/%d" % (currentNumber, lastNumber))
+
 ############################## SCRIPT ##############################
 
 # parameters
-maxIterations = 50
+maxIterations = 25
 graphSize =  10
 
 # generate graphs
@@ -30,10 +34,11 @@ filenames = graph.saveRandomGraphsToFiles(maxIterations, graphSize)
 # collect data
 averageResults = {}
 for iterations in range(1, maxIterations):
-  sumOfResults = 0
-  for j in range(iterations):
-    sumOfResults += runSolver(filenames[j])
-  averageResults[iterations] = sumOfResults / iterations
+  displayProgress(iterations, maxIterations)
+  averageResult = 0
+  for i in range(iterations):
+    averageResult += runSolver(filenames[i])
+  averageResults[iterations] = averageResult / iterations
 
 # remove graph files
 for filename in filenames:
