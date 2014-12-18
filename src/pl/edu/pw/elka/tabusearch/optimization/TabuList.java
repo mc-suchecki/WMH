@@ -9,29 +9,24 @@ import java.util.*;
  */
 class TabuList {
     private final Integer tabuListMaxSize;
-    private Integer size;
 
     private final Set<Move> movesSet;
 
     public TabuList(final Integer tabuListMaxSize) {
         this.tabuListMaxSize = tabuListMaxSize;
         this.movesSet = new LinkedHashSet<>(tabuListMaxSize);
-        this.size = 0;
     }
 
     public void add(final Move move) {
         //move can be reinserted despite being on the tabu list when aspiration criterion is satisfied
         if (movesSet.contains(move)) {
             movesSet.remove(move);
-            --size;
         }
 
         movesSet.add(move);
 
-        if (size.equals(tabuListMaxSize + 1)) {
+        if (movesSet.size() == tabuListMaxSize + 1) {
             removeEldestMove();
-        } else {
-            ++size;
         }
     }
 
