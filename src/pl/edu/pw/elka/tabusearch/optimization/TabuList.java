@@ -28,7 +28,7 @@ class TabuList {
 
         movesSet.add(move);
 
-        if (size.equals(tabuListMaxSize)) {
+        if (size.equals(tabuListMaxSize + 1)) {
             removeEldestMove();
         } else {
             ++size;

@@ -11,7 +11,6 @@ import pl.edu.pw.elka.tabusearch.optimization.neighbourhood.TwoOptNeighbourhood;
 import java.util.List;
 
 public class TabuSearchSolver implements Solver {
-
     private final InitialSolutionGenerator solutionGenerator = new InitialSolutionGenerator();
     private final BestSolutionMoveFinder bestSolutionMoveFinder;
 
