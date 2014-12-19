@@ -26,7 +26,7 @@ public class AspirationPlusFinder implements BestSolutionMoveFinder {
     @Override
     public SolutionMove getBestNeighbour(final TwoOptNeighbourhood neighbourhood, final TabuList tabuList,
                                          final Integer aspirationThreshold, final Solution globallyBestSolution) {
-        SolutionMove bestNeighbour = neighbourhood.iterator().next();
+        SolutionMove bestNeighbour = null;
         int neighboursChecked = 0;
         int neighboursSinceAspirationSatisfied = 0;
         boolean aspirationThresholdReached = false;
@@ -34,9 +34,12 @@ public class AspirationPlusFinder implements BestSolutionMoveFinder {
         for (final SolutionMove neighbour : neighbourhood) {
             final Solution currentSolution = neighbour.getSolution();
 
-            if (isAllowed(tabuList, globallyBestSolution, neighbour)
-                    && currentSolution.isBetterThan(bestNeighbour.getSolution())) {
-                bestNeighbour = neighbour;
+            if (isAllowed(tabuList, globallyBestSolution, neighbour)) {
+                if (bestNeighbour == null) {
+                    bestNeighbour = neighbour;
+                } else if(currentSolution.isBetterThan(bestNeighbour.getSolution())){
+                    bestNeighbour = neighbour;
+                }
             }
 
             aspirationThresholdReached |= (currentSolution.getDistance() <= aspirationThreshold);

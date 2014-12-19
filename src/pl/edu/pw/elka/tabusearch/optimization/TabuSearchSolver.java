@@ -34,6 +34,11 @@ public class TabuSearchSolver implements Solver {
             final TwoOptNeighbourhood neighbourhood = new TwoOptNeighbourhood(currentSolution);
             final SolutionMove currentSolutionMove = bestSolutionMoveFinder.getBestNeighbour(
                     neighbourhood, tabuList, aspiration, bestSolution);
+
+            if (currentSolutionMove == null) {
+                break;
+            }
+
             currentSolution = currentSolutionMove.getSolution();
             final Move currentMove = currentSolutionMove.getMove();
             tabuList.add(currentMove);
