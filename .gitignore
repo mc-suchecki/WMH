@@ -18,3 +18,7 @@ hs_err_pid*
 # Custom files
 out/
 test/graph.txt
+
+# LaTeX
+*.out
+*.aux
