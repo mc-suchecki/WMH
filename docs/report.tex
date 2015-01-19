@@ -287,7 +287,7 @@ Ze względu na fakt, iż zaimplementowany algorytm jest algorytmem heurystycznym
 
 Liczba powtórzeń była wyznaczona doświadczalnie, za pomocą eksperymentu przedstawionego na wykresie poniżej:
 \begin{figure}[H]
-\includegraphics[trim = 0mm 0mm 0mm 12mm, clip, width=14cm]{wykresy/repetitions.pdf}
+\includegraphics[trim = 0mm 0mm 0mm 12mm, clip, width=14cm]{graphs/repetitions.pdf}
 \caption{Zależność średniego wyniku działania programu od liczby powtórzeń}
 \end{figure}
 
@@ -320,31 +320,41 @@ Po wyznaczeniu wymaganej liczby powtórzeń został utworzony skrypt testujący.
 
 \subsubsection{Wpływ rozmiaru listy Tabu na wydajność algorytmu}
 \begin{figure}[H]
-\includegraphics[trim = 0mm 2mm 0mm 12mm, clip, width=14cm]{graphs/tabuListSize.pdf}
+\includegraphics[trim = 0mm 3mm 0mm 12mm, clip, width=14cm]{graphs/tabuListSize.pdf}
 \caption{Wpływ rozmiaru listy Tabu na wydajność algorytmu.}
 \end{figure}
 
 \subsubsection{Wpływ parametru Plus na wydajność algorytmu}
 \begin{figure}[H]
-\includegraphics[trim = 0mm 2mm 0mm 12mm, clip, width=14cm]{graphs/plus.pdf}
+\includegraphics[trim = 0mm 3mm 0mm 12mm, clip, width=14cm]{graphs/plus.pdf}
 \caption{Wpływ parametru Plus na wydajność algorytmu.}
 \end{figure}
 
 \subsubsection{Wpływ parametru Min na wydajność algorytmu}
 \begin{figure}[H]
-\includegraphics[trim = 0mm 2mm 0mm 12mm, clip, width=14cm]{graphs/min.pdf}
+\includegraphics[trim = 0mm 3mm 0mm 12mm, clip, width=14cm]{graphs/min.pdf}
 \caption{Wpływ parametru Min na wydajność algorytmu.}
 \end{figure}
 
 \newpage
 \subsubsection{Wpływ parametru Max na wydajność algorytmu}
 \begin{figure}[H]
-\includegraphics[trim = 0mm 0mm 0mm 12mm, clip, width=14cm]{graphs/max.pdf}
+\includegraphics[trim = 0mm 3mm 0mm 12mm, clip, width=14cm]{graphs/max.pdf}
 \caption{Wpływ parametru Max na wydajność algorytmu.}
 \end{figure}
 
 \subsubsection{Wnioski}
-% TODO
+Uzyskane wyniki są zgodne z~naszymi oczekiwaniami. Po pierwsze, dla wszystkich parametrów widać wyraźny wpływ na czas działania algorytmu -- zwiększanie wartości każdego z~parametrów powoduje zasadniczo zwiększenie czasu wykonywania algorytmu. Jest to zgodne z~intuicją, ponieważ zwiększenie każdego z~parametrów powoduje zwiększenie liczby rozwiązań koniecznych do sprawdzenia, a~co za tym idzie -- liczby operacji do wykonania.\\
+
+Z~tego samego powodu na wykresach można wyraźnie zaobserwować polepszanie się znalezionego rozwiązania wraz ze zwiększaniem parametrów. Ciekawe są zwłaszcza pierwsze dwa wykresy. W~przypadku listy Tabu, można zaobserwować oscylacje na końcu wykresu. Odnośnie parametru Plus, widać ustabilizowanie się wyniku dla wartości powyżej 25 -- zwiększanie parametru nie daje poprawy ze względu na ograniczony rozmiar sąsiedztwa rozwiązania. \\
+
+Na podstawie dokładniejszej analizy wykresów można wyznaczyć optymalne wartości parametrów dla tak zaimplementowanego algorytmu. Oczywiście zależą one od konkretnego grafu (w~szczególności oczywiście od liczby wierzchołków) oraz naszych priorytetów (szybkość/jakość) aczkolwiek w~ogólności prezentują się one według nas następująco:
+\begin{itemize}
+  \item rozmiar listy Tabu: optymalna wartość zawiera się w~przedziale (15, 25)
+  \item parametr Plus: optymalna wartość zawiera się w~przedziale (25, 35)
+  \item parametr Min: optymalna wartość zawiera się w~przedziale (20, 50)
+  \item parametr Max: optymalna wartość zawiera się w~przedziale (20, 50)
+\end{itemize}
 
 % bibliography
 \addcontentsline{toc}{chapter}{Bibliografia}
