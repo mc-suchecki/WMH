@@ -22,3 +22,8 @@ test/graph.txt
 # LaTeX
 *.out
 *.aux
+*.bbl
+*.blg
+
+# Python cache
+test/__pycache__/

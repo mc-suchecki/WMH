@@ -282,6 +282,13 @@ By zapewnić szybkie sprawdzanie czy ruch znajduje się w kontenerze wykorzystan
 \newpage
 \section{Część 3}
 \subsection{Prezentacja wyników}
+\subsubsection{Definicje}
+W~kontekście testowania projektu definiujemy dwa parametry określające wydajność algorytmu:
+\begin{itemize}
+  \item \textbf{wynik} -- długość najkrótszej ścieżki znalezionej przez program (jakość rozwiązania),
+  \item \textbf{czas działania programu} -- czas, jaki upłynął pomiędzy wykonaniem programu (dla zadanych parametrów oraz grafu wejściowego), a jego zakończeniem i~zwróceniem wyniku.
+\end{itemize}
+
 \subsubsection{Uśrednianie wyników}
 Ze względu na fakt, iż zaimplementowany algorytm jest algorytmem heurystycznym, jakość otrzymywanych wyników zależy od właściwości grafu podanego na wejściu. Z~tego powodu -- dla zwiększenia czytelności wyników -- każde uruchomienie programu jest powtarzane kilkukrotnie dla różnych grafów. Wynik oraz czas działania programu jest przyjmowany jako średnia z~odpowiednich wartości w~kolejnych uruchomieniach.\\
 
@@ -293,9 +300,9 @@ Liczba powtórzeń była wyznaczona doświadczalnie, za pomocą eksperymentu prz
 
 W~celu wyznaczenia liczby powtórzeń, wygenerowaliśmy 50 losowych grafów pełnych. Następnie uruchamialiśmy solver dla coraz większej liczby grafów, uśredniając przy tym otrzymany wynik. Na otrzymanym wykresie widać, że wartość 10 jest minimalną liczbą powtórzeń, dla których można już potwierdzić wiarygodność otrzymywanych wyników.\\
 
+\newpage
 Kod generujący powyższy wykres jest przedstawiony poniżej:
 
-\newpage
 \begin{lstlisting}[caption = Fragment kodu programu w języku Python generującego powyższy wykres]
 # parameters
 maxIterations = 50

@@ -25,7 +25,7 @@ def displayProgress(currentNumber, lastNumber):
 ############################## SCRIPT ##############################
 
 # parameters
-maxIterations = 25
+maxIterations = 40
 graphSize =  10
 
 # generate graphs

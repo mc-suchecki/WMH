@@ -2,6 +2,7 @@
 # parameters affects its performance by generating graphs and launching solver.
 # Author:       Maciej 'mc' Suchecki
 
+import os
 import sys
 import graph
 import timeit
@@ -67,9 +68,9 @@ defaultMin = 10
 defaultMax = 20
 defaultPlus = 5
 tabuListSizes = range(1, 51)
-minParameters = range(1, 91)
-maxParameters = range(11, 101)
-plusParameters = range(1, 101)
+minParameters = range(1, 51)
+maxParameters = range(11, 51)
+plusParameters = range(1, 51)
 
 # create dictionaries for plotting
 timesDictionary = {}
